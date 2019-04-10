@@ -375,8 +375,7 @@ class Windows {
                     require will be removed through preloader */,
         preload: `${__dirname}/preloader/mistUI.js`,
         'overlay-fullscreen-video': true,
-        'overlay-scrollbars': true,
-        experimentalFeatures: true
+        'overlay-scrollbars': true
       },
       wallet: {
         preload: `${__dirname}/preloader/walletMain.js`,
@@ -395,23 +394,6 @@ class Windows {
             x: global.defaultWindow.x,
             y: global.defaultWindow.y,
             webPreferences: mainWebPreferences[global.mode]
-          }
-        };
-      case 'splash':
-        return {
-          primary: true,
-          url: `${global.interfacePopupsUrl}#splashScreen_${global.mode}`,
-          show: true,
-          electronOptions: {
-            width: 400,
-            height: 230,
-            resizable: false,
-            backgroundColor: '#F6F6F6',
-            useContentSize: true,
-            frame: false,
-            webPreferences: {
-              preload: `${__dirname}/preloader/splashScreen.js`
-            }
           }
         };
       case 'loading':
@@ -481,12 +463,22 @@ class Windows {
             alwaysOnTop: true
           }
         };
-      case 'sendTransactionConfirmation':
+      case 'sendTx':
         return {
           electronOptions: {
             width: 580,
             height: 550,
             alwaysOnTop: true,
+            enableLargerThanScreen: false,
+            resizable: true
+          }
+        };
+      case 'txHistory':
+        return {
+          electronOptions: {
+            width: 580,
+            height: 465,
+            alwaysOnTop: false,
             enableLargerThanScreen: false,
             resizable: true
           }
@@ -508,7 +500,7 @@ class Windows {
           electronOptions: {
             width: 600,
             height: 340,
-            alwaysOnTop: false,
+            alwaysOnTop: true,
             resizable: false,
             maximizable: false
           }
@@ -584,7 +576,10 @@ class Windows {
     const genericWindowBlacklist = [
       'remix',
       'updateAvailable',
-      'connectAccount'
+      'clientUpdateAvailable',
+      'connectAccount',
+      'sendTx',
+      'txHistory'
     ];
     if (
       !genericWindowBlacklist.includes(type) &&

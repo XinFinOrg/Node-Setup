@@ -21,7 +21,8 @@ export const initialState = {
   swarmEnableOnStart: false,
   uiMode: '',
   updateCheckerRan: false,
-  cliFlags: {}
+  cliFlags: {},
+  etherPriceUSD: 0
 };
 
 const settings = (state = initialState, action) => {
@@ -42,25 +43,17 @@ const settings = (state = initialState, action) => {
     case '[MAIN]:TEST_MODE:SET':
       return Object.assign({}, state, { autoTestMode: true });
     case '[MAIN]:CLI_FLAGS:SYNC':
-      return Object.assign({}, state, {
-        cliFlags: action.payload.cliFlags
-      });
+      return Object.assign({}, state, { cliFlags: action.payload.cliFlags });
     case '[MAIN]:SET_LANGUAGE_ON_MAIN:SUCCESS':
       return Object.assign({}, state, { i18n: action.payload.i18n });
     case '[MAIN]:SWARM:ENABLING':
-      return Object.assign({}, state, {
-        swarmState: SwarmState.Enabling
-      });
+      return Object.assign({}, state, { swarmState: SwarmState.Enabling });
     case '[MAIN]:SWARM:ENABLED':
       return Object.assign({}, state, { swarmState: SwarmState.Enabled });
     case '[MAIN]:SWARM:DISABLING':
-      return Object.assign({}, state, {
-        swarmState: SwarmState.Disabling
-      });
+      return Object.assign({}, state, { swarmState: SwarmState.Disabling });
     case '[MAIN]:SWARM:DISABLED':
-      return Object.assign({}, state, {
-        swarmState: SwarmState.Disabled
-      });
+      return Object.assign({}, state, { swarmState: SwarmState.Disabled });
     case '[MAIN]:SWARM:FAILURE':
       return Object.assign({}, state, { swarmState: SwarmState.Error });
     case '[MAIN]:SWARM:ENABLE_ON_START':
@@ -71,6 +64,18 @@ const settings = (state = initialState, action) => {
       return Object.assign({}, state, { updateCheckerRan: true });
     case '[MAIN]:IPC_PROVIDER_BACKEND:FINISH':
       return Object.assign({}, state, { ipcProviderBackendInit: true });
+    case '[CLIENT]:GET_PRICE_CONVERSION:START':
+      return Object.assign({}, state, {
+        etherPriceUSD: 0
+      });
+    case '[CLIENT]:GET_PRICE_CONVERSION:SUCCESS':
+      return Object.assign({}, state, {
+        etherPriceUSD: action.payload.etherPriceUSD
+      });
+    case '[CLIENT]:GET_PRICE_CONVERSION:FAILURE':
+      return Object.assign({}, state, {
+        etherPriceUSD: 0
+      });
     default:
       return state;
   }

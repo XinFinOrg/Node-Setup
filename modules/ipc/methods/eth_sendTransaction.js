@@ -49,7 +49,12 @@ module.exports = class extends BaseProcessor {
         return reject(err);
       }
 
-      const modalWindow = Windows.createPopup('sendTransactionConfirmation', {
+      store.dispatch({
+        type: '[CLIENT]:NEW_TX:START',
+        payload: payload.params[0]
+      });
+
+      const modalWindow = Windows.createPopup('sendTx', {
         sendData: { uiAction_sendData: payload.params[0] }
       });
 
@@ -60,7 +65,16 @@ module.exports = class extends BaseProcessor {
 
         // user cancelled?
         if (!modalWindow.processed) {
-          reject(this.ERRORS.METHOD_DENIED);
+          reject(this.ERRORS.TX_DENIED);
+        }
+      });
+
+      modalWindow.on('close', () => {
+        BlurOverlay.disable();
+
+        // user cancelled?
+        if (!modalWindow.processed) {
+          reject(this.ERRORS.TX_DENIED);
         }
       });
 
@@ -73,11 +87,9 @@ module.exports = class extends BaseProcessor {
           ) {
             if (err || !result) {
               this._log.debug('Confirmation error', err);
-
-              reject(err || this.ERRORS.METHOD_DENIED);
+              reject(err || this.ERRORS.TX_DENIED);
             } else {
               this._log.info('Transaction sent', result);
-
               resolve(result);
             }
 

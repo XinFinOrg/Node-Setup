@@ -1,3 +1,4 @@
 [submodule "dapp-styles"]
-    path = interface/public/dapp-styles
-    url = git://github.com/ethereum/dapp-styles.git
+  path = interface/public/dapp-styles
+  url = git://github.com/ethereum/dapp-styles.git
+

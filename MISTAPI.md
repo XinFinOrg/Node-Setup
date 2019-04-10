@@ -2,54 +2,51 @@
 
 Mist provides an API for dapp developers to use special features only available in Mist.
 
-## Note for dapp developers
+---
 
-To make your dapp compatible with other browsers, it is recommended that you check the `mist` object before you use it:
+You can check for the `mist` object in your dapp:
 
 ```js
-if(typeof mist !== 'undefined') {
+if (typeof mist !== 'undefined') {
     ...
 }
 ```
 
-You have three different possibilities to use `web3`:
+---
+
+We recommend initializing your web3 library with our provider:
 
 ```js
-// 1. simply use it: web3 comes already defined
-web3;
-
-// 2. optionally use web3 from Mist or load if outside of Mist
-if (typeof web3 === 'undefined')
-  web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-
-// 3. always use web3 provided by the dapp ("Web3" won't be supplied by Mist), but the provider from Mist
-if (typeof web3 !== 'undefined') web3 = new Web3(web3.currentProvider);
-else web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+} else {
+  web3 = new Web3('ws://localhost:8546');
+}
 ```
 
 ## API
 
-* [mist.platform](#mistplatform)
-* [mist.requestAccount](#mistrequestaccountcallback)(callback)
-* [mist.menu](#mistmenu)
-* [mist.menu.add](#mistmenuaddid-options-callback)([id,] options, callback)
-* [mist.menu.clear](#mistmenuclear)()
-* [mist.menu.remove](#mistmenuremoveid)(id)
-* [mist.menu.select](#mistmenuselectid)(text)
-* [mist.menu.setBadge](#mistmenusetbadgetext)(text)
-* [mist.menu.update](#mistmenuupdateid--options--callback)(id [, options][, callback])
-* [mist.sounds](#mistsounds)
-* [mist.sounds.bip](#mistsoundsbip)()
-* [mist.sounds.bloop](#mistsoundsbloop)()
-* [mist.sounds.invite](#mistsoundsinvite)()
+- [mist.platform](#mistplatform)
+- [mist.requestAccount](#mistrequestaccountcallback)(callback)
+- [mist.menu](#mistmenu)
+- [mist.menu.add](#mistmenuaddid-options-callback)([id,] options, callback)
+- [mist.menu.clear](#mistmenuclear)()
+- [mist.menu.remove](#mistmenuremoveid)(id)
+- [mist.menu.select](#mistmenuselectid)(text)
+- [mist.menu.setBadge](#mistmenusetbadgetext)(text)
+- [mist.menu.update](#mistmenuupdateid--options--callback)(id [, options][, callback])
+- [mist.sounds](#mistsounds)
+- [mist.sounds.bip](#mistsoundsbip)()
+- [mist.sounds.bloop](#mistsoundsbloop)()
+- [mist.sounds.invite](#mistsoundsinvite)()
 
 ### mist.platform
 
 Returns the current platform, mist is running on:
 
-* `darwin` (Mac OSX)
-* `win32` (Windows)
-* `linux` (Linux)
+- `darwin` (Mac OSX)
+- `win32` (Windows)
+- `linux` (Linux)
 
 ---
 
@@ -64,7 +61,7 @@ Asks the user to provide, or create a new account.
 #### Example
 
 ```js
-mist.requestAccount(function(e, address) {
+mist.requestAccount(function(error, address) {
   console.log('Added new account', address);
 });
 ```
@@ -85,10 +82,10 @@ Adds/Updates a sub menu entry, which is placed below you dapp button in the side
 
 1.  `String` **optional** and id string to identify your sub menu entry when updating.
 2.  `Object` The menu options:
-    * `name` (`String`): The name of the sub menu button.
-    * `badge` (`String|null`) **optional**: The badge text for the sub menu button, e.g. `50`.
-    * `position` (`Number`) **optional**: The position of the submenu button, `1` is on the top.
-    * `selected` (`Boolean`) **optional**: Whether or not this sub menu entry is currently selected.
+    - `name` (`String`): The name of the sub menu button.
+    - `badge` (`String|null`) **optional**: The badge text for the sub menu button, e.g. `50`.
+    - `position` (`Number`) **optional**: The position of the submenu button, `1` is on the top.
+    - `selected` (`Boolean`) **optional**: Whether or not this sub menu entry is currently selected.
 3.  `Function` **optional**: The callback to be called when the sub menu entry is clicked.
 
 #### Minimal example
@@ -170,10 +167,10 @@ Works like `mist.menu.add()`, but only the `id` parameter is required.
 
 1.  `String` and id string to identify your sub menu entry.
 2.  `Object` The menu options:
-    * `name` (`String`): (optional) The name of the sub menu button.
-    * `badge` (`String|null`): (optional) The badge text for the sub menu button, e.g. `50`.
-    * `position` (`Number`): (optional) The position of the submenu button, `1` is on the top.
-    * `selected` (`Boolean`): (optional) Whether or not this sub menu entry is currently selected.
+    - `name` (`String`): (optional) The name of the sub menu button.
+    - `badge` (`String|null`): (optional) The badge text for the sub menu button, e.g. `50`.
+    - `position` (`Number`): (optional) The position of the submenu button, `1` is on the top.
+    - `selected` (`Boolean`): (optional) Whether or not this sub menu entry is currently selected.
 3.  `Function` (optional) The callback to be called when the sub menu entry is clicked.
 
 #### Example

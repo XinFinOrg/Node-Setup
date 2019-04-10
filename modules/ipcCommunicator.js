@@ -59,8 +59,16 @@ ipc.on('backendAction_setWindowSize', (e, width, height) => {
   const senderWindow = Windows.getById(windowId);
 
   if (senderWindow) {
-    senderWindow.window.setSize(width, height);
-    senderWindow.window.center(); // ?
+    const { x, y } = senderWindow.window.getBounds();
+    senderWindow.window.setBounds(
+      {
+        width,
+        height: height | 0,
+        x,
+        y
+      },
+      true
+    );
   }
 });
 
@@ -259,7 +267,7 @@ ipc.on('mistAPI_requestAccount', e => {
   } else {
     // Mist
     // if coming from wallet, skip connect, go straight to create
-    if (e.sender.history[0] === 'https://wallet.ethereum.org/') {
+    if (e.sender.history[0].includes(`file://${dirname}/wallet/index.html`)) {
       createAccountPopup(e);
     } else {
       Windows.createPopup('connectAccount', { ownerId: e.sender.id });

@@ -101,7 +101,7 @@ main {
   -webkit-app-region: drag;
 }
 
-// Fading Mist interface when sendTransactionConfirmationPopup is shown.
+// Fading Mist interface when SendTx is shown.
 html {
   &.has-blur-overlay {
     pointer-events: none;
@@ -193,5 +193,16 @@ aside.sidebar {
       border: 2px solid rgba(0, 0, 0, 0);
       background-clip: padding-box;
     }
+  }
+}
+
+.layout_webviews-loadingIndicator {
+  width: 100%;
+  height: 100%;
+  span {
+    display: block;
+    text-align: center;
+    position: relative;
+    top: calc(~'50% + 30px');
   }
 }
