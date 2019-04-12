@@ -19,9 +19,9 @@ import {
 import logger from './utils/logger';
 const ethereumNodeLog = logger.create('EthereumNode');
 
-const DEFAULT_NODE_TYPE = 'geth';
+const DEFAULT_NODE_TYPE = 'XDC';
 const DEFAULT_NETWORK = 'main';
-const DEFAULT_SYNCMODE = 'light';
+const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
 const NODE_START_WAIT_MS = 3000;
@@ -92,7 +92,7 @@ class EthereumNode extends EventEmitter {
   }
 
   get isGeth() {
-    return this._type === 'geth';
+    return this._type === 'XDC';
   }
 
   get isMainNetwork() {
@@ -175,6 +175,7 @@ class EthereumNode extends EventEmitter {
         );
 
         ethereumNodeLog.info(`Node type: ${this.defaultNodeType}`);
+        ethereumNodeLog.info(`Test Info :- ${this.nodeOptions}`);
         ethereumNodeLog.info(`Network: ${this.defaultNetwork}`);
         ethereumNodeLog.info(`SyncMode: ${this.defaultSyncMode}`);
 
@@ -291,7 +292,7 @@ class EthereumNode extends EventEmitter {
 
   /**
    * Start an ethereum node.
-   * @param  {String} nodeType geth, eth, etc
+   * @param  {String} nodeType XDC, eth, etc
    * @param  {String} network  network id
    * @param  {String} syncMode full, fast, light, nosync
    * @return {Promise}
@@ -354,9 +355,9 @@ class EthereumNode extends EventEmitter {
         this.lastError = err.tag;
         this.state = STATES.ERROR;
 
-        // if unable to start eth node then write geth to defaults
+        // if unable to start eth node then write XDC to defaults
         if (nodeType === 'eth') {
-          Settings.saveUserData('node', 'geth');
+          Settings.saveUserData('node', 'XDC');
         }
 
         throw err;
@@ -407,7 +408,7 @@ class EthereumNode extends EventEmitter {
    */
   __startProcess(nodeType, network, binPath, _syncMode) {
     let syncMode = _syncMode;
-    if (nodeType === 'geth' && !syncMode) {
+    if (nodeType === 'XDC' && !syncMode) {
       syncMode = DEFAULT_SYNCMODE;
     }
 
@@ -492,10 +493,16 @@ class EthereumNode extends EventEmitter {
         // Starts Main net
         default:
           args =
-            nodeType === 'geth'
-              ? ['--cache', process.arch === 'x64' ? '1024' : '512']
+            nodeType === 'XDC'
+              ? [
+                  '--ws',
+                  '--rpc',
+                  '--minerthreads',
+                  '1',
+                  process.arch === 'x64' ? '1024' : '512'
+                ]
               : ['--unsafe-transactions'];
-          if (nodeType === 'geth' && syncMode === 'nosync') {
+          if (nodeType === 'XDC' && syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
           } else {
             args.push('--syncmode', syncMode);
@@ -543,7 +550,7 @@ class EthereumNode extends EventEmitter {
         /*
                     We wait a short while before marking startup as successful
                     because we may want to parse the initial node output for
-                    errors, etc (see geth port-binding error above)
+                    errors, etc (see XDC port-binding error above)
                 */
         setTimeout(() => {
           if (STATES.STARTING === this.state) {
@@ -593,12 +600,12 @@ class EthereumNode extends EventEmitter {
       this.emit('nodeLog', cleanData);
     }
 
-    // check for geth startup errors
+    // check for XDC startup errors
     if (STATES.STARTING === this.state) {
       const dataStr = data.toString().toLowerCase();
-      if (nodeType === 'geth') {
+      if (nodeType === 'XDC') {
         if (dataStr.indexOf('fatal: error') >= 0) {
-          const error = new Error(`Geth error: ${dataStr}`);
+          const error = new Error(`XDC error: ${dataStr}`);
 
           if (dataStr.indexOf('bind') >= 0) {
             error.tag = UNABLE_TO_BIND_PORT_ERROR;

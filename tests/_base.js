@@ -6,7 +6,7 @@ const fs = require('fs');
 const Web3 = require('web3');
 const shell = require('shelljs');
 const path = require('path');
-const gethPrivate = require('geth-private');
+const gethPrivate = require('XDC-private');
 const Application = require('spectron').Application;
 const chai = require('chai');
 const http = require('http');
@@ -30,15 +30,15 @@ const startGeth = function*() {
   const manager = new ClientBinaryManager(config);
   yield manager.init();
 
-  if (!manager.clients.Geth.state.available) {
-    gethPath = manager.clients.Geth.activeCli.fullPath;
-    console.info('Downloading geth...');
-    const downloadedGeth = yield manager.download('Geth');
+  if (!manager.clients.XDC.state.available) {
+    gethPath = manager.clients.XDC.activeCli.fullPath;
+    console.info('Downloading XDC...');
+    const downloadedGeth = yield manager.download('XDC');
     gethPath = downloadedGeth.client.activeCli.fullPath;
-    console.info('Geth downloaded at:', gethPath);
+    console.info('XDC downloaded at:', gethPath);
   }
 
-  const geth = gethPrivate({
+  const XDC = gethPrivate({
     gethPath,
     balance: 5,
     genesisBlock: {
@@ -54,11 +54,11 @@ const startGeth = function*() {
     }
   });
 
-  console.info('Geth starting...');
-  yield geth.start();
-  console.info('Geth started');
+  console.info('XDC starting...');
+  yield XDC.start();
+  console.info('XDC started');
 
-  return geth;
+  return XDC;
 };
 
 const startFixtureServer = function(serverPort) {
@@ -101,14 +101,14 @@ exports.mocha = (_module, options) => {
         shell.rm('-rf', e);
       });
 
-      this.geth = yield startGeth();
+      this.XDC = yield startGeth();
 
       const appFileName = options.app === 'wallet' ? 'Ethereum Wallet' : 'Mist';
       const platformArch = `${process.platform}-${process.arch}`;
       console.info(`${appFileName} :: ${platformArch}`);
 
       let appPath;
-      const ipcProviderPath = path.join(this.geth.dataDir, 'geth.ipc');
+      const ipcProviderPath = path.join(this.XDC.dataDir, 'XDC.ipc');
 
       switch (platformArch) {
         case 'darwin-x64':
@@ -159,7 +159,7 @@ exports.mocha = (_module, options) => {
           '--logfile',
           mistLogFile,
           '--node-datadir',
-          this.geth.dataDir,
+          this.XDC.dataDir,
           '--rpc',
           ipcProviderPath
         ],
@@ -272,9 +272,9 @@ exports.mocha = (_module, options) => {
         yield this.app.stop();
       }
 
-      if (this.geth && this.geth.isRunning) {
-        console.log('Stopping geth...');
-        yield this.geth.stop();
+      if (this.XDC && this.XDC.isRunning) {
+        console.log('Stopping XDC...');
+        yield this.XDC.stop();
       }
 
       if (this.httpServer && this.httpServer.isListening) {
@@ -419,10 +419,10 @@ const Utils = {
     yield Q.delay(1000);
   },
   *startMining() {
-    yield this.geth.consoleExec('miner.start();');
+    yield this.XDC.consoleExec('miner.start();');
   },
   *stopMining() {
-    yield this.geth.consoleExec('miner.stop();');
+    yield this.XDC.consoleExec('miner.stop();');
   },
 
   *selectTab(tabId) {

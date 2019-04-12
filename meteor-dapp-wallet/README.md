@@ -20,16 +20,16 @@ Install npm dependencies:
 
 ## Development
 
-Start a `geth` node:
+Start a `XDC` node:
 
-    $ geth --ws --wsorigins "http://localhost:3000" --unlock <your account>
+    $ XDC --ws --wsorigins "http://localhost:1000" --unlock <your account>
 
 Run dev server:
 
     $ cd meteor-dapp-wallet/app
     $ meteor
 
-Navigate to http://localhost:3000
+Navigate to http://localhost:1000
 
 ## Deployment
 

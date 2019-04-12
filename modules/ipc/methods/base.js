@@ -117,12 +117,12 @@ module.exports = class BaseProcessor {
     // 3. the method is
     // net_peerCount | eth_syncing | eth_subscribe[syncing]
     // and is originating from the mist interface
-    // dev: localhost:3000, production: app.asar/interface/index.html
+    // dev: localhost:1000, production: app.asar/interface/index.html
     if (
       conn &&
       conn.owner &&
       conn.owner.history &&
-      (conn.owner.history[0].startsWith('http://localhost:3000') ||
+      (conn.owner.history[0].startsWith('http://localhost:1000') ||
         conn.owner.history[0].indexOf('app.asar/interface/index.html') > -1)
     ) {
       if (

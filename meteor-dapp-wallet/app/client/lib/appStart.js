@@ -53,8 +53,8 @@ var checkSync = function() {
         collectionObservers = [];
       } else if (_.isObject(syncing)) {
         syncing.progress = Math.floor(
-          (syncing.currentBlock - syncing.startingBlock) /
-            (syncing.highestBlock - syncing.startingBlock) *
+          ((syncing.currentBlock - syncing.startingBlock) /
+            (syncing.highestBlock - syncing.startingBlock)) *
             100
         );
         syncing.blockDiff = numeral(
@@ -74,7 +74,12 @@ var checkSync = function() {
     })
     .catch(function(error) {
       console.log('Error: ', error);
-      if (error.toString().toLowerCase().includes('connection not open')) {
+      if (
+        error
+          .toString()
+          .toLowerCase()
+          .includes('connection not open')
+      ) {
         showModal();
       } else {
         // retry
@@ -86,10 +91,10 @@ var checkSync = function() {
 var showModal = function() {
   // make sure the modal is rendered after all routes are executed
   Meteor.setTimeout(function() {
-    // if in mist, tell to start geth, otherwise start with RPC
+    // if in mist, tell to start XDC, otherwise start with RPC
     var gethRPC = window.mist
-      ? 'geth'
-      : 'geth --ws --wsorigins "' +
+      ? 'XDC'
+      : 'XDC --ws --wsorigins "' +
         window.location.protocol +
         '//' +
         window.location.host +
@@ -142,7 +147,12 @@ var connect = function() {
     })
     .catch(function(error) {
       console.log('Error: ', error);
-      if (error.toString().toLowerCase().includes('connection not open')) {
+      if (
+        error
+          .toString()
+          .toLowerCase()
+          .includes('connection not open')
+      ) {
         showModal();
       } else {
         // retry

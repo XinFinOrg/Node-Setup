@@ -161,15 +161,15 @@ class Settings {
     ipcPath = this.userHomePath;
 
     if (process.platform === 'darwin') {
-      ipcPath += '/Library/Ethereum/geth.ipc';
+      ipcPath += '/Library/Ethereum/XDC.ipc';
     } else if (
       process.platform === 'freebsd' ||
       process.platform === 'linux' ||
       process.platform === 'sunos'
     ) {
-      ipcPath += '/.ethereum/geth.ipc';
+      ipcPath += '/.ethereum/XDC.ipc';
     } else if (process.platform === 'win32') {
-      ipcPath = '\\\\.\\pipe\\geth.ipc';
+      ipcPath = '\\\\.\\pipe\\XDC.ipc';
     }
 
     settingsLog.debug(`IPC path: ${ipcPath}`);
@@ -350,7 +350,7 @@ const argv = require('yargs')
     node: {
       demand: false,
       default: null,
-      describe: 'Node to use: geth, eth',
+      describe: 'Node to use: XDC, eth',
       requiresArg: true,
       nargs: 1,
       type: 'string',
@@ -393,7 +393,7 @@ const argv = require('yargs')
     },
     gethpath: {
       demand: false,
-      describe: 'Path to Geth executable to use instead of default.',
+      describe: 'Path to XDC executable to use instead of default.',
       requiresArg: true,
       nargs: 1,
       type: 'string',
@@ -436,7 +436,7 @@ const argv = require('yargs')
     syncmode: {
       demand: false,
       requiresArg: true,
-      describe: 'Geth synchronization mode: [fast|light|full|nosync]',
+      describe: 'XDC synchronization mode: [fast|light|full|nosync]',
       nargs: 1,
       type: 'string',
       group: 'Mist options:'
@@ -461,7 +461,7 @@ const argv = require('yargs')
     },
     '': {
       describe:
-        'To pass options to the underlying node (e.g. Geth) use the --node- prefix, e.g. --node-datadir',
+        'To pass options to the underlying node (e.g. XDC) use the --node- prefix, e.g. --node-datadir',
       group: 'Node options:'
     }
   })
