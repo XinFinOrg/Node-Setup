@@ -1,6 +1,6 @@
-# Ethereum Wallet Ðapp
+# XinFin Network Ðapp
 
-The Ethereum wallet.
+The XinFin Network.
 
 [![Build Status](https://travis-ci.org/ethereum/meteor-dapp-wallet.svg?branch=master)](https://travis-ci.org/ethereum/meteor-dapp-wallet)
 

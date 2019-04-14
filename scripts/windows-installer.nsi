@@ -26,10 +26,10 @@ CRCCheck on
 RequestExecutionLevel admin
 
 !searchreplace APPNAMENOHYPEN ${APPNAME} "-" " "
-!define GROUPNAME "Ethereum"
-!define HELPURL "https://github.com/ethereum/mist/releases/issues"
-!define UPDATEURL "https://github.com/ethereum/mist/releases"
-!define ABOUTURL "https://ethereum.org"
+!define GROUPNAME "XinFin Network"
+!define HELPURL "https://github.com/xinfinorg"
+!define UPDATEURL "https://github.com/xinfinorg"
+!define ABOUTURL "https://xinfin.org"
 !define /date NOW "%Y%m%d"
 
 ## These must be integers and can be set on the command line by NSIS with "/DMAJORVERSION=0 /DMINORVERSION=8 /DBUILDVERSION=7"
@@ -65,7 +65,7 @@ ${EndIf}
 
     SetShellVarContext current
     StrCpy $DATADIR "$APPDATA\${APPNAME}"
-    StrCpy $NODEDATADIR "$APPDATA\Ethereum"
+    StrCpy $NODEDATADIR "$APPDATA\XDCChain"
     StrCpy $SHORTCUTDIR "$SMPROGRAMS\${APPNAMENOHYPEN}"
     StrCpy $DESKTOPDIR "$DESKTOP"
 

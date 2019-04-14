@@ -73,7 +73,7 @@
         },
         "error": {
           "wrongChain":
-            "Sie folgen nicht der Hauptblockchain, bitte starten Sie die Ethereum Wallet App neu!"
+            "Sie folgen nicht der Hauptblockchain, bitte starten Sie die XinFin Network App neu!"
         },
         "warnings": {
           "txOriginVulnerabilityWallet":

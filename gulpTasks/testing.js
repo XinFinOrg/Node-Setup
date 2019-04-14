@@ -42,7 +42,7 @@ gulp.task('verify-artifacts', done => {
 
   // should be 'mist' or 'wallet'
   const productNamePrefix = productName =>
-    productName == 'mist' ? 'Mist' : 'Ethereum-Wallet';
+    productName == 'mist' ? 'Mist' : 'XinFin-Network';
 
   const checkArtifactsLinux = filenameFragment =>
     allFilesExists([

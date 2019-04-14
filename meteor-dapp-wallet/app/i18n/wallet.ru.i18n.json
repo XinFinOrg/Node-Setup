@@ -43,7 +43,7 @@
       },
       "error": {
         "wrongChain":
-          "Кажется вы не в той цепочке, перезапустите Ethereum Wallet App!"
+          "Кажется вы не в той цепочке, перезапустите XinFin Network App!"
       },
       "warnings": {
         "txOriginVulnerabilityWallet":

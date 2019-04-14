@@ -1,6 +1,6 @@
-Ethereum Wallet
+XinFin Network
 
-The Ethereum wallet, which allows you to create simple and multisig wallets to manage your ether.
+The XinFin Network, which allows you to create simple and multisig wallets to manage your ether.
 
 The wallet contains its own node, but can also use an already running one, if the IPC path of that node is the standard path.
 (See below)

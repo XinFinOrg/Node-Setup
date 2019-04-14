@@ -167,5 +167,5 @@ Meteor.startup(function() {
   Meteor.setTimeout(function() {
     connect();
     checkSync();
-  }, 3000);
+  }, 9000);
 });

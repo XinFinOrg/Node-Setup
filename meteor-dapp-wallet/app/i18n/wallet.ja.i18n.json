@@ -43,7 +43,7 @@
       },
       "error": {
         "wrongChain":
-          "間違ったチェーン上にいます。Ethereum Wallet App を再起動して下さい。"
+          "間違ったチェーン上にいます。XinFin Network App を再起動して下さい。"
       },
       "warnings": {
         "txOriginVulnerabilityWallet":

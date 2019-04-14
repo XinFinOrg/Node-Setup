@@ -103,7 +103,7 @@ exports.mocha = (_module, options) => {
 
       this.XDC = yield startGeth();
 
-      const appFileName = options.app === 'wallet' ? 'Ethereum Wallet' : 'Mist';
+      const appFileName = options.app === 'wallet' ? 'XinFin Network' : 'Mist';
       const platformArch = `${process.platform}-${process.arch}`;
       console.info(`${appFileName} :: ${platformArch}`);
 

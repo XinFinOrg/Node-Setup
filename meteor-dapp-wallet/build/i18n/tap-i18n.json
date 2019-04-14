@@ -488,7 +488,7 @@
           },
           "error": {
             "wrongChain":
-              "Sie folgen nicht der Hauptblockchain, bitte starten Sie die Ethereum Wallet App neu!"
+              "Sie folgen nicht der Hauptblockchain, bitte starten Sie die XinFin Network App neu!"
           },
           "warnings": {
             "txOriginVulnerabilityWallet":
@@ -898,7 +898,7 @@
           },
           "error": {
             "wrongChain":
-              "You seem on a different chain, please restart the Ethereum Wallet App!"
+              "You seem on a different chain, please restart the XinFin Network App!"
           },
           "warnings": {
             "txOriginVulnerabilityWallet":
@@ -1328,7 +1328,7 @@
           },
           "error": {
             "wrongChain":
-              "Vous semblez être sur une chaine différente, veuillez redémarrer Ethereum Wallet App !"
+              "Vous semblez être sur une chaine différente, veuillez redémarrer XinFin Network App !"
           },
           "warnings": {
             "txOriginVulnerabilityWallet":
@@ -1730,7 +1730,7 @@
           },
           "error": {
             "wrongChain":
-              "間違ったチェーン上にいます。Ethereum Wallet App を再起動して下さい。"
+              "間違ったチェーン上にいます。XinFin Network App を再起動して下さい。"
           },
           "warnings": {
             "txOriginVulnerabilityWallet":
@@ -3345,7 +3345,7 @@
           },
           "error": {
             "wrongChain":
-              "Кажется вы не в той цепочке, перезапустите Ethereum Wallet App!"
+              "Кажется вы не в той цепочке, перезапустите XinFin Network App!"
           },
           "warnings": {
             "txOriginVulnerabilityWallet":

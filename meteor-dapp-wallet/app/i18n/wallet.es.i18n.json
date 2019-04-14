@@ -44,7 +44,7 @@
       },
       "error": {
         "wrongChain":
-          "You seem on a different chain, please restart the Ethereum Wallet App!"
+          "You seem on a different chain, please restart the XinFin Network App!"
       },
       "warnings": {
         "txOriginVulnerabilityWallet":
