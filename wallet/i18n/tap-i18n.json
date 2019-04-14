@@ -56,9 +56,9 @@
             "note": "Nota",
             "balance": "Balanç",
             "connectionErrorMist":
-              "No s'ha pogut connectar. Si us plau inicia geth utilitzant:<br><br><small><code>__node__</code><br><br>Assegura't que la ruta al teu IPC és per defecte, quan utilitzis un <code>datadir</code> diferent, ex.<br><code>geth --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/Library/Ethereum/geth.ipc</code><br>o<br><code>geth --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/.ethereum/geth.ipc</code>. <br><br>Afegeix opcionalment: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
+              "No s'ha pogut connectar. Si us plau inicia XDC utilitzant:<br><br><small><code>__node__</code><br><br>Assegura't que la ruta al teu IPC és per defecte, quan utilitzis un <code>datadir</code> diferent, ex.<br><code>XDC --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/Library/Ethereum/XDC.ipc</code><br>o<br><code>XDC --datadir ... --ipcpath /Users/&lt;elTeuUsuari&gt;/.ethereum/XDC.ipc</code>. <br><br>Afegeix opcionalment: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
             "connectionErrorBrowser":
-              "No s'ha pogut connectar. Si us plau inicia geth amb les següents opcions:<br><br><small><code>__node__</code><br><br>Opcionalment afegeix: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
+              "No s'ha pogut connectar. Si us plau inicia XDC amb les següents opcions:<br><br><small><code>__node__</code><br><br>Opcionalment afegeix: <code>--unlock &lt;elTeuCompte&gt;.</code></small>",
             "pendingConfirmationsBadge": "Confirmació Pendent!",
             "nodeSyncing": "__blockDiff__ blocs restants",
             "blockReceived": "Nou bloc rebut",
@@ -470,7 +470,7 @@
             "note": "Notiz",
             "balance": "Kontostand",
             "connectionErrorMist":
-              "Verbindung konnte nicht hergestellt werden. Bitte starten Sie XDC mit folgendem Kommando:<br><br><small><code>__node__</code><br><br>Stellen Sie sicher, dass Sie Ihren IPC Pfad zum einen Standardpfad festgelegt haben, wenn Sie einen anderen <code>datadir</code> verwenden, z.B. <br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>oder<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Alternative Option: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Verbindung konnte nicht hergestellt werden. Bitte starten Sie XDC mit folgendem Kommando:<br><br><small><code>__node__</code><br><br>Stellen Sie sicher, dass Sie Ihren IPC Pfad zum einen Standardpfad festgelegt haben, wenn Sie einen anderen <code>datadir</code> verwenden, z.B. <br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>oder<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Alternative Option: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
               "Verbindung konnte nicht hergestellt werden. Bitte starten Sie XDC mit den folgenden Optionen:<br><br><small><code>__node__</code><br><br>Alternative Optionen: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "Ausstehende Bestätigung!",
@@ -880,9 +880,9 @@
             "note": "Nota",
             "balance": "Saldo",
             "connectionErrorMist":
-              "No se pudo conectar. Por favor, inicie geth con:<br><br><small><code>__node__</code><br><br>Asegúrese de establecer la ruta de IPC a la por defecto, cuando usa un <code>datadir</code> distinto, por ej.<br><code>geth --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/Library/Ethereum/geth.ipc</code><br>o<br><code>geth --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/.ethereum/geth.ipc</code>. <br><br>Opcionalmente: <code>--unlock &lt;suCuenta&gt;.</code></small>",
+              "No se pudo conectar. Por favor, inicie XDC con:<br><br><small><code>__node__</code><br><br>Asegúrese de establecer la ruta de IPC a la por defecto, cuando usa un <code>datadir</code> distinto, por ej.<br><code>XDC --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/Library/Ethereum/XDC.ipc</code><br>o<br><code>XDC --datadir ... --ipcpath /Users/&lt;suUsuario&gt;/.ethereum/XDC.ipc</code>. <br><br>Opcionalmente: <code>--unlock &lt;suCuenta&gt;.</code></small>",
             "connectionErrorBrowser":
-              "No se pudo conectar. Por favor inicie geth con las siguientes opciones:<br><br><small><code>__node__</code><br><br>Opcionalmente agregue: <code>--unlock &lt;suCuenta&gt;.</code></small>",
+              "No se pudo conectar. Por favor inicie XDC con las siguientes opciones:<br><br><small><code>__node__</code><br><br>Opcionalmente agregue: <code>--unlock &lt;suCuenta&gt;.</code></small>",
             "pendingConfirmationsBadge": "Confirmación Pendiente!",
             "nodeSyncing": "__blockDiff__ blocks left",
             "blockReceived": "New Block Received",
@@ -1310,7 +1310,7 @@
             "note": "Note",
             "balance": "Solde",
             "connectionErrorMist":
-              "Impossible de se connecter. Veuillez lancer gexp en utilisant : <br><br><small><code>__node__</code><br><br>Assurez-vous d'avoir bien renseigné le chemin IPC par défaut lorsque vous utilisez un <code>datadir</code> différent, ex : <br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>ou<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.Ethereum/geth.ipc</code>. <br><br>Ajout facultatif : <code>--unlock &lt;votreCompte&gt;.</code></small>",
+              "Impossible de se connecter. Veuillez lancer gexp en utilisant : <br><br><small><code>__node__</code><br><br>Assurez-vous d'avoir bien renseigné le chemin IPC par défaut lorsque vous utilisez un <code>datadir</code> différent, ex : <br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>ou<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.Ethereum/XDC.ipc</code>. <br><br>Ajout facultatif : <code>--unlock &lt;votreCompte&gt;.</code></small>",
             "connectionErrorBrowser":
               "Impossible de se connecter. Veuillez lancer gexp en utilisant les options suivantes : <br><br><small><code>__node__</code><br><br>Ajout facultatif : <code>--unlock &lt;votreCompte&gt;.</code></small>",
             "pendingConfirmationsBadge": "Confirmation en cours !",
@@ -1713,9 +1713,9 @@
             "note": "ノート",
             "balance": "残高",
             "connectionErrorMist":
-              "接続不可。 geth を使用して下さい。:<br><br><small><code>__node__</code><br><br>IPC pathがデフォルトのものかを確認して下さい、違うものを使用している場合は <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "接続不可。 XDC を使用して下さい。:<br><br><small><code>__node__</code><br><br>IPC pathがデフォルトのものかを確認して下さい、違うものを使用している場合は <code>datadir</code>, e.g.<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
-              "接続不可。以下のオプションから geth を開始して下さい:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "接続不可。以下のオプションから XDC を開始して下さい:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "確認中!",
             "nodeSyncing": "__blockDiff__ blocks left",
             "blockReceived": "新ブロック受信",
@@ -2112,7 +2112,7 @@
             "note": "메모",
             "balance": "잔고",
             "connectionErrorMist":
-              "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 디폴트로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "연결할 수 없습니다. geth를 다음과 같이 실행하세요:<br><br><small><code>__node__</code><br><br>IPC 경로가 디폴트로 되어있는지 확인하세요. 만일 다른 경로를 사용한다면 다음과 같이 실행하세요: <code>datadir</code>, e.g.<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
               "연결할 수 없습니다. geth를 다음의 옵션으로 실행하세요.:<br><br><small><code>__node__</code><br><br>Optional add: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "승인 대기 중!",
@@ -2515,7 +2515,7 @@
             "note": "Nota",
             "balance": "Saldo",
             "connectionErrorMist":
-              "Não foi possível conectar. Inicie XDC usando:<br><br><small><code>__node__</code><br><br> Assegure-se que o endereço IPC está configurado corretamente desta forma: <br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Opcional: <code>--unlock &lt;suaConta&gt;.</code></small>",
+              "Não foi possível conectar. Inicie XDC usando:<br><br><small><code>__node__</code><br><br> Assegure-se que o endereço IPC está configurado corretamente desta forma: <br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Opcional: <code>--unlock &lt;suaConta&gt;.</code></small>",
             "connectionErrorBrowser":
               "Não foi possível conectar. Por favor inicie XDC com as seguintes opções: <br><br><small><code>__node__</code><br><br>Opcional: <code>--unlock &lt;suaConta&gt;.</code></small>",
             "pendingConfirmationsBadge": "Aguardando confirmação",
@@ -2925,9 +2925,9 @@
             "note": "Nota",
             "balance": "Balanta",
             "connectionErrorMist":
-              "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Ai grija sa iti setezi calea IPC implicita<code>datadir</code>, e.g.<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Nu ma pot conecta. Te rog porneste XDC cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Ai grija sa iti setezi calea IPC implicita<code>datadir</code>, e.g.<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
-              "Nu ma pot conecta. Te rog porneste geth cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Nu ma pot conecta. Te rog porneste XDC cu urmatoarele optiuni:<br><br><small><code>__node__</code><br><br>Optional adauga: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "Astept confirmarea!",
             "nodeSyncing": "__blockDiff__ blocuri ramase",
             "blockReceived": "Bloc nou descarcat",
@@ -3327,9 +3327,9 @@
             "note": "Примечание",
             "balance": "Баланс",
             "connectionErrorMist":
-              "Подключение не получилось. Пожалуйста запустите geth используя:<br><br><small><code>__node__</code><br><br>Убедитесь, что установлен правильный путь IPC по умолчанию, если вы используете особый <code>datadir</code>, например<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Подключение не получилось. Пожалуйста запустите XDC используя:<br><br><small><code>__node__</code><br><br>Убедитесь, что установлен правильный путь IPC по умолчанию, если вы используете особый <code>datadir</code>, например<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
-              "Подключение не получилось. Попробуйте запустить geth с такими параметрами:<br><br><small><code>__node__</code><br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Подключение не получилось. Попробуйте запустить XDC с такими параметрами:<br><br><small><code>__node__</code><br><br>Можно добавить: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "Ожидаем подтверждения!",
             "nodeSyncing": "осталось __blockDiff__ блоков",
             "blockReceived": "Получено новых блоков",
@@ -3728,9 +3728,9 @@
             "note": "Shënim",
             "balance": "Balanca",
             "connectionErrorMist":
-              "Nuk mund të lidhet. Ju lutemi të nisni geth duke përdorur:<br><br><small><code>__node__</code><br><br>Sigurohuni që vendndodhja e IPC të jetë ajo e parazgjedhur, nëse përdoret <code>datadir</code> e ndryshme, p.sh.<br><code>geth --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/.ethereum/geth.ipc</code>. <br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
+              "Nuk mund të lidhet. Ju lutemi të nisni XDC duke përdorur:<br><br><small><code>__node__</code><br><br>Sigurohuni që vendndodhja e IPC të jetë ajo e parazgjedhur, nëse përdoret <code>datadir</code> e ndryshme, p.sh.<br><code>XDC --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;perdoruesiJuaj&gt;/.ethereum/XDC.ipc</code>. <br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
             "connectionErrorBrowser":
-              "Nuk mund të lidhet. Ju lutemi të nisni geth duke përdorur:<br><br><small><code>__node__</code><br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
+              "Nuk mund të lidhet. Ju lutemi të nisni XDC duke përdorur:<br><br><small><code>__node__</code><br><br>Sipas dëshirës shtoni: <code>--unlock &lt;llogariaJuaj&gt;.</code></small>",
             "pendingConfirmationsBadge": "Duke pritur konfirmim!",
             "nodeSyncing": "__blockDiff__ blloqe të mbetura",
             "blockReceived": "U mor bllok i ri",
@@ -4136,9 +4136,9 @@
             "note": "Примітка",
             "balance": "Баланс",
             "connectionErrorMist":
-              "Не можу з'єднатися. Будь ласка запустить geth використовуючи:<br><br><small><code>__node__</code><br><br>Переконайтеся, що ви встановили IPC шлях за замовчанням, коли використовували інший <code>datadir</code>, наприклад<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>або<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Не можу з'єднатися. Будь ласка запустить XDC використовуючи:<br><br><small><code>__node__</code><br><br>Переконайтеся, що ви встановили IPC шлях за замовчанням, коли використовували інший <code>datadir</code>, наприклад<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>або<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
-              "Не можу з'єднатися. Будьласка запустить geth з такими параметрами:<br><br><small><code>__node__</code><br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "Не можу з'єднатися. Будьласка запустить XDC з такими параметрами:<br><br><small><code>__node__</code><br><br>Можна додати: <code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "Потрібні підтвердження!",
             "nodeSyncing": "залишилось __blockDiff__ блоків",
             "blockReceived": "Новий Блок отримано",
@@ -4517,9 +4517,9 @@
             "note": "備註",
             "balance": "餘額",
             "connectionErrorMist":
-              "無法連線。請用下列指令開啟 geth:<br><br><small><code>__node__</code><br><br>當使用不同<code>datadir</code>時，請確認將 IPC 路徑設回預設的，也就是：<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "無法連線。請用下列指令開啟 XDC:<br><br><small><code>__node__</code><br><br>當使用不同<code>datadir</code>時，請確認將 IPC 路徑設回預設的，也就是：<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
-              "無法連線，請使用下列方式啟動 geth 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "無法連線，請使用下列方式啟動 XDC 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "等待中的確認！",
             "nodeSyncing": "剩下 __blockDiff__ 塊",
             "blockReceived": "收到新的區塊",
@@ -4897,9 +4897,9 @@
             "note": "备注",
             "balance": "余额",
             "connectionErrorMist":
-              "无法连线。请用下列指令启动 geth:<br><br><small><code>__node__</code><br><br>当使用不同<code>datadir</code>时，请确认将 IPC 路径设到默认值的，也就是：<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/geth.ipc</code><br>or<br><code>geth --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/geth.ipc</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "无法连线。请用下列指令启动 XDC:<br><br><small><code>__node__</code><br><br>当使用不同<code>datadir</code>时，请确认将 IPC 路径设到默认值的，也就是：<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/Library/Ethereum/XDC.ipc</code><br>or<br><code>XDC --datadir ... --ipcpath /Users/&lt;yourUser&gt;/.ethereum/XDC.ipc</code>. <br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
             "connectionErrorBrowser":
-              "无法连线，请使用下列方式启动 geth 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
+              "无法连线，请使用下列方式启动 XDC 。<br><br><small><code>__node__</code><br><br>或加上：<code>--unlock &lt;yourAccount&gt;.</code></small>",
             "pendingConfirmationsBadge": "确认等待中！",
             "nodeSyncing": "剩下 __blockDiff__ 块",
             "blockReceived": "收到新的区块",
