@@ -9,7 +9,6 @@
     "url": ""
   },
   "scripts": {
-    "precommit": "pretty-quick --staged",
     "postinstall": "git submodule update --init --recursive && yarn task pack-wallet && (cd interface && yarn)",
     "dev:electron": "electron -r babel-register main.js",
     "dev:meteor": "cd interface && meteor --no-release-check --port 1000",

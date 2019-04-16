@@ -13,7 +13,7 @@ const log = require('./utils/logger').create('ClientBinaryManager');
 
 // should be       'https://raw.githubusercontent.com/ethereum/mist/master/clientBinaries.json'
 const BINARY_URL =
-  'https://raw.githubusercontent.com/ethereum/mist/master/clientBinaries.json';
+  'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/master/clientBinaries.json';
 
 const ALLOWED_DOWNLOAD_URLS_REGEX = /^https:\/\/(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)?ethereum\.org\/|gethstore\.blob\.core\.windows\.net\/|bintray\.com\/artifact\/download\/karalabe\/ethereum\/)(?:.+)/; // eslint-disable-line max-len
 
@@ -47,7 +47,7 @@ class Manager extends EventEmitter {
   }
 
   _checkForNewConfig(restart) {
-    const nodeType = 'Geth';
+    const nodeType = 'XDC';
     let binariesDownloaded = false;
     let nodeInfo;
 
@@ -57,7 +57,7 @@ class Manager extends EventEmitter {
 
     // fetch config
     return got(BINARY_URL, {
-      timeout: 3000,
+      timeout: 6000,
       json: true
     })
       .then(res => {
@@ -122,16 +122,16 @@ class Manager extends EventEmitter {
           .replace('sunos', 'linux');
         const binaryVersion =
           latestConfig.clients[nodeType].platforms[platform][process.arch];
-        const checksums = _.pick(binaryVersion.download, 'sha256', 'md5');
-        const algorithm = _.keys(checksums)[0].toUpperCase();
-        const hash = _.values(checksums)[0];
+        // const checksums = _.pick(binaryVersion.download, 'sha256', 'md5');
+        // const algorithm = _.keys(checksums)[0].toUpperCase();
+        // const hash = _.values(checksums)[0];
 
         // get the node data, to be able to pass it to a possible error
         nodeInfo = {
           type: nodeType,
-          version: nodeVersion,
-          checksum: hash,
-          algorithm
+          version: nodeVersion
+          // checksum: hash,
+          // algorithm
         };
 
         // if new config version available then ask user if they wish to update
@@ -152,7 +152,7 @@ class Manager extends EventEmitter {
                   uiAction_sendData: {
                     name: nodeType,
                     version: nodeVersion,
-                    checksum: `${algorithm}: ${hash}`,
+                    // checksum: `${algorithm}: ${hash}`,
                     downloadUrl: binaryVersion.download.url,
                     restart
                   }
@@ -212,7 +212,7 @@ class Manager extends EventEmitter {
         return mgr
           .init({
             folders: [
-              path.join(Settings.userDataPath, 'binaries', 'Geth', 'unpacked'),
+              path.join(Settings.userDataPath, 'binaries', 'XDC', 'unpacked'),
               path.join(Settings.userDataPath, 'binaries', 'Eth', 'unpacked')
             ]
           })
@@ -236,8 +236,8 @@ class Manager extends EventEmitter {
                 binariesDownloaded = true;
 
                 return mgr.download(c.id, {
-                  downloadFolder: path.join(Settings.userDataPath, 'binaries'),
-                  urlRegex: ALLOWED_DOWNLOAD_URLS_REGEX
+                  downloadFolder: path.join(Settings.userDataPath, 'binaries')
+                  // urlRegex: ALLOWED_DOWNLOAD_URLS_REGEX
                 });
               });
             }

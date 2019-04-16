@@ -24,7 +24,7 @@ const DEFAULT_NETWORK = 'main';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
-const NODE_START_WAIT_MS = 3000;
+const NODE_START_WAIT_MS = 9000;
 
 const STATES = {
   STARTING: 0 /* Node about to be started */,
@@ -330,7 +330,7 @@ class EthereumNode extends EventEmitter {
           .connect(
             Settings.rpcConnectConfig,
             {
-              timeout: 30000 /* 30s */
+              timeout: 90000 /* 30s */
             }
           )
           .then(() => {
@@ -494,19 +494,24 @@ class EthereumNode extends EventEmitter {
         default:
           args =
             nodeType === 'XDC'
-              ? [
-                  '--ws',
-                  '--rpc',
-                  '--minerthreads',
-                  '1',
-                  process.arch === 'x64' ? '1024' : '512'
-                ]
+            ? [
+              '--ws',
+              '--rpc',
+              '--minerthreads',
+              '1',
+              'networkid',
+              '1151',
+              '--ethstats',
+              '"XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+              process.arch === 'x64' ? '1024' : '512'
+            ]
               : ['--unsafe-transactions'];
           if (nodeType === 'XDC' && syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
           } else {
             args.push('--syncmode', syncMode);
           }
+          console.log(`Args ${args}`)
       }
 
       const nodeOptions = Settings.nodeOptions;
