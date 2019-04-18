@@ -6,10 +6,9 @@
         "linux": {
           "x64": {
             "download": {
-              "url": "https://gethstore.blob.core.windows.net/builds/XDC-linux-amd64-1.8.20-24d727b6.tar.gz",
+              "url": "http://download.xinfin.network/XDC-linux.tar.gz",
               "type": "tar",
-              "md5": "02dbf3cbe10c684a67ca890f647fa0b7",
-              "bin": "XDC-linux-amd64-1.8.20-24d727b6/XDC"
+              "bin": "XDC-linux/XDC"
             },
             "bin": "XDC",
             "commands": {
@@ -19,17 +18,16 @@
                 ],
                 "output": [
                   "XDC",
-                  "1.8.20"
+                  "0.5.0"
                 ]
               }
             }
           },
           "ia32": {
             "download": {
-              "url": "https://gethstore.blob.core.windows.net/builds/XDC-linux-386-1.8.20-24d727b6.tar.gz",
+              "url": "http://download.xinfin.network/XDC-linux.tar.gz",
               "type": "tar",
-              "md5": "89bcdb8c532e3b6a60c987d16206e8d9",
-              "bin": "XDC-linux-386-1.8.20-24d727b6/XDC"
+              "bin": "XDC-linux/XDC"
             },
             "bin": "XDC",
             "commands": {
@@ -39,7 +37,7 @@
                 ],
                 "output": [
                   "XDC",
-                  "1.8.20"
+                  "0.5.0"
                 ]
               }
             }
@@ -48,10 +46,9 @@
         "mac": {
           "x64": {
             "download": {
-              "url": "https://gethstore.blob.core.windows.net/builds/XDC-darwin-amd64-1.8.20-24d727b6.tar.gz",
+              "url": "http://download.xinfin.network/XDC-linux.tar.gz",
               "type": "tar",
-              "md5": "5ff0cecc3f361391f531e412807c12dd",
-              "bin": "XDC-darwin-amd64-1.8.20-24d727b6/XDC"
+              "bin": "XDC-darwin/XDC"
             },
             "bin": "XDC",
             "commands": {
@@ -61,7 +58,7 @@
                 ],
                 "output": [
                   "XDC",
-                  "1.8.20"
+                  "0.5.0"
                 ]
               }
             }
