@@ -451,7 +451,7 @@ const Utils = {
           /Fixture/.test(e);
         });
       },
-      3000,
+      6000,
       'expected to properly load fixture'
     );
   },

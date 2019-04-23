@@ -212,8 +212,8 @@ class Manager extends EventEmitter {
         return mgr
           .init({
             folders: [
-              path.join(Settings.userDataPath, 'binaries', 'XDC', 'unpacked'),
-              path.join(Settings.userDataPath, 'binaries', 'Eth', 'unpacked')
+              path.join(Settings.userDataPath, 'binaries', 'XDC', 'unpacked' , 'XDC'),
+              path.join(Settings.userDataPath, 'binaries', 'Eth', 'unpacked' , 'Eth')
             ]
           })
           .then(() => {

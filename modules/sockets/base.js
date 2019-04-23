@@ -4,8 +4,8 @@ const EventEmitter = require('events').EventEmitter;
 
 const log = require('../utils/logger').create('Sockets');
 
-const CONNECT_INTERVAL_MS = 1000;
-const CONNECT_TIMEOUT_MS = 3000;
+const CONNECT_INTERVAL_MS = 4000;
+const CONNECT_TIMEOUT_MS = 12000;
 
 /**
  * Socket connecting to Ethereum Node.

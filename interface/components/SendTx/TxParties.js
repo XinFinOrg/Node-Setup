@@ -107,7 +107,7 @@ class TxParties extends Component {
     return (
       <div className="connection">
         <div className="amount">
-          {this.totalAmount()} <span className="unit">ETHER</span>
+          {this.totalAmount()} <span className="unit">XDC</span>
           {executionFunction && (
             <div
               className={`function-signature ${
