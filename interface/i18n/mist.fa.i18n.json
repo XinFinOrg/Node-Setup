@@ -43,9 +43,9 @@
         "devToolsWebview": "__webview__",
         "runTests": "Run tests",
         "logFiles": "Show log file",
-        "ethereumNode": "Ethereum Node",
+        "ethereumNode": "XinFin Node",
         "network": "Network",
-        "mainNetwork": "Main Network",
+        "mainNetwork": " XinFin Main Network",
         "startMining": "⛏ Start Mining",
         "stopMining": "⛏ Stop Mining",
         "openRemix": "Open Remix IDE"

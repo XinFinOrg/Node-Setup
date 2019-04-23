@@ -45,7 +45,7 @@
         "logFiles": "로그파일 보기",
         "ethereumNode": "이더리움 노드",
         "network": "네트워크",
-        "mainNetwork": "메인 네트워크",
+        "mainNetwork": " XinFin 메인 네트워크",
         "startMining": "⛏ 채굴 시작(테스트넷만 해당)",
         "stopMining": "⛏ 채굴 중단",
         "openRemix": "Remix IDE 열기"

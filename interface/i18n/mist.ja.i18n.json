@@ -45,7 +45,7 @@
         "logFiles": "ログファイルを表示する",
         "ethereumNode": "Ethereum ノード",
         "network": "ネットワーク",
-        "mainNetwork": "メインネットワーク",
+        "mainNetwork": " XinFin メインネットワーク",
         "startMining": "⛏ マイニングを始める",
         "stopMining": "⛏ マイニングを中止する",
         "openRemix": "Remix IDE を開く"

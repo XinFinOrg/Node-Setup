@@ -573,7 +573,7 @@ let menuTempl = function(webviews) {
         }
       },
       {
-        label: 'Ropsten - Test network',
+        label: 'XinFin - Test network',
         accelerator: 'CommandOrControl+Alt+2',
         checked: store.getState().nodes.network === 'ropsten',
         enabled: store.getState().nodes.network !== 'private',
@@ -581,17 +581,17 @@ let menuTempl = function(webviews) {
         click() {
           changeNodeNetwork('ropsten', webviews);
         }
-      },
-      {
-        label: 'Rinkeby - Test network',
-        accelerator: 'CommandOrControl+Alt+3',
-        checked: store.getState().nodes.network === 'rinkeby',
-        enabled: store.getState().nodes.network !== 'private',
-        type: 'checkbox',
-        click() {
-          changeNodeNetwork('rinkeby', webviews);
-        }
       }
+      // {
+      //   label: 'Rinkeby - Test network',
+      //   accelerator: 'CommandOrControl+Alt+3',
+      //   checked: store.getState().nodes.network === 'rinkeby',
+      //   enabled: store.getState().nodes.network !== 'private',
+      //   type: 'checkbox',
+      //   click() {
+      //     changeNodeNetwork('rinkeby', webviews);
+      //   }
+      // }
       // {
       //   label: 'Solo network',
       //   accelerator: 'CommandOrControl+Alt+4',
@@ -609,24 +609,24 @@ let menuTempl = function(webviews) {
   devToolsMenu.push({
     label: i18n.t('mist.applicationMenu.develop.syncMode'),
     submenu: [
-      {
-        label: i18n.t('mist.applicationMenu.develop.syncModeLight'),
-        enabled: ethereumNode.isOwnNode && !ethereumNode.isDevNetwork,
-        checked: store.getState().nodes.local.syncMode === 'light',
-        type: 'checkbox',
-        click() {
-          changeNodeSyncMode('light', webviews);
-        }
-      },
-      {
-        label: i18n.t('mist.applicationMenu.develop.syncModeFast'),
-        enabled: ethereumNode.isOwnNode && !ethereumNode.isDevNetwork,
-        checked: store.getState().nodes.local.syncMode === 'fast',
-        type: 'checkbox',
-        click() {
-          changeNodeSyncMode('fast', webviews);
-        }
-      },
+      // {
+      //   label: i18n.t('mist.applicationMenu.develop.syncModeLight'),
+      //   enabled: ethereumNode.isOwnNode && !ethereumNode.isDevNetwork,
+      //   checked: store.getState().nodes.local.syncMode === 'light',
+      //   type: 'checkbox',
+      //   click() {
+      //     changeNodeSyncMode('light', webviews);
+      //   }
+      // },
+      // {
+      //   label: i18n.t('mist.applicationMenu.develop.syncModeFast'),
+      //   enabled: ethereumNode.isOwnNode && !ethereumNode.isDevNetwork,
+      //   checked: store.getState().nodes.local.syncMode === 'fast',
+      //   type: 'checkbox',
+      //   click() {
+      //     changeNodeSyncMode('fast', webviews);
+      //   }
+      // },
       {
         label: i18n.t('mist.applicationMenu.develop.syncModeFull'),
         enabled: ethereumNode.isOwnNode,

@@ -62,9 +62,9 @@
         "runTests": "Tests uitvoeren",
         "logFiles": "Toon log bestand",
         "openRemix": "Open Remix IDE",
-        "ethereumNode": "Ethereum Node",
+        "ethereumNode": "XinFin Node",
         "network": "Netwerk",
-        "mainNetwork": "Hoofdnetwerk",
+        "mainNetwork": " XinFin Hoofdnetwerk",
         "startMining": "⛏ Start Mining",
         "stopMining": "⛏ Stop Mining"
       },

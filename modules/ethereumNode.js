@@ -20,7 +20,7 @@ import logger from './utils/logger';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'main';
+const DEFAULT_NETWORK = 'ropsten';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
@@ -450,11 +450,13 @@ class EthereumNode extends EventEmitter {
         // fall through
         case 'test':
           args = [
-            '--testnet',
-            '--cache',
-            process.arch === 'x64' ? '1024' : '512',
-            '--ipcpath',
-            Settings.rpcIpcPath
+            '--ws',
+            '--rpc',
+            'networkid',
+            '1151',
+            '--ethstats',
+            '"XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+            process.arch === 'x64' ? '1024' : '512'
           ];
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');

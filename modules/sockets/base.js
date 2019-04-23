@@ -8,7 +8,7 @@ const CONNECT_INTERVAL_MS = 4000;
 const CONNECT_TIMEOUT_MS = 12000;
 
 /**
- * Socket connecting to Ethereum Node.
+ * Socket connecting to XinFin Node.
  */
 class Socket extends EventEmitter {
   constructor(socketMgr, id) {

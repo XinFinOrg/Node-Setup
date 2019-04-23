@@ -45,7 +45,7 @@
         "logFiles": "顯示日誌文件",
         "ethereumNode": "以太坊節點",
         "network": "網路",
-        "mainNetwork": "主網路",
+        "mainNetwork": " XinFin 主網路",
         "startMining": "⛏ 開啓挖礦（僅限Testnet網路）",
         "stopMining": "⛏ 停止挖礦",
         "openRemix": "Open Remix IDE"

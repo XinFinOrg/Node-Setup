@@ -45,7 +45,7 @@
         "logFiles": "显示日志文件",
         "ethereumNode": "以太坊节点",
         "network": "网络",
-        "mainNetwork": "主网络",
+        "mainNetwork": " XinFin 主网络",
         "startMining": "⛏ 开启挖矿（仅限Testnet网络）",
         "stopMining": "⛏ 停止挖矿",
         "openRemix": "Open Remix IDE"
