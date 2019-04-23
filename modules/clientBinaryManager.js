@@ -28,13 +28,13 @@ class Manager extends EventEmitter {
     log.info('Initializing...');
 
     // check every hour
-    setInterval(() => this._checkForNewConfig(true), 1000 * 60 * 60);
+    setInterval(() => this._checkForNewConfig(true), 1000 * 60 * 60*60);
 
     return this._checkForNewConfig(restart);
   }
 
   getClient(clientId) {
-    return this._availableClients[clientId.toLowerCase()];
+    return this._availableClients[clientId];
   }
 
   _writeLocalConfig(json) {
@@ -247,7 +247,7 @@ class Manager extends EventEmitter {
 
             _.each(mgr.clients, client => {
               if (client.state.available) {
-                const idlcase = client.id.toLowerCase();
+                const idlcase = client.id;
 
                 this._availableClients[idlcase] = {
                   binPath:
