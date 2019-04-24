@@ -24,7 +24,7 @@ const DEFAULT_NETWORK = 'main';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
-const NODE_START_WAIT_MS = 9000;
+const NODE_START_WAIT_MS = 15000;
 
 const STATES = {
   STARTING: 0 /* Node about to be started */,
@@ -455,8 +455,7 @@ class EthereumNode extends EventEmitter {
             '1151',
             '--ethstats',
             'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
-            '--rpc',
-            process.arch === 'x64' ? '1024' : '512'
+            '--rpc'
           ];
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
@@ -504,8 +503,7 @@ class EthereumNode extends EventEmitter {
               'networkid',
               '1151',
               '--ethstats',
-              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
-              process.arch === 'x64' ? '1024' : '512'
+              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000'
             ]
               : ['--unsafe-transactions'];
           if (nodeType === 'XDC' && syncMode === 'nosync') {
@@ -530,8 +528,11 @@ class EthereumNode extends EventEmitter {
 
       ethereumNodeLog.info('Spawn', binPath, args);
       ethereumNodeLog.info('Spawn', binPath, gensis);
-      const proc1 = spawn(binPath, gensis);
+      
+      const proc1 = spawn(binPath, gensis)
       const proc = spawn(binPath, args);
+      // const proc2 = spawn(binPath, newacc);      
+      
       
 
       proc.once('error', error => {
@@ -560,6 +561,17 @@ class EthereumNode extends EventEmitter {
         }
       });
 
+      proc1.stdout.on('data', data => {
+        ethereumNodeLog.info('Got stdout data', data.toString());
+        this.emit('data', data);
+      });
+
+      proc1.stderr.on('data', data => {
+        ethereumNodeLog.info('Got stderr data', data.toString());
+        ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
+        this.emit('data', data);
+      });
+
       proc.stdout.on('data', data => {
         ethereumNodeLog.trace('Got stdout data', data.toString());
         this.emit('data', data);
@@ -571,16 +583,7 @@ class EthereumNode extends EventEmitter {
         this.emit('data', data);
       });
 
-      proc1.stdout.on('data', data => {
-        ethereumNodeLog.info('Got stdout data', data.toString());
-        this.emit('data', data);
-      });
 
-      proc1.stderr.on('data', data => {
-        ethereumNodeLog.info('Got stderr data', data.toString());
-        ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
-        this.emit('data', data);
-      });
       // when data is first received
       this.once('data', () => {
         /*
