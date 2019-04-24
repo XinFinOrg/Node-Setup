@@ -455,7 +455,7 @@ class EthereumNode extends EventEmitter {
             'networkid',
             '1151',
             '--ethstats',
-            '"XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+            'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
             process.arch === 'x64' ? '1024' : '512'
           ];
           if (syncMode === 'nosync') {
@@ -504,7 +504,7 @@ class EthereumNode extends EventEmitter {
               'networkid',
               '1151',
               '--ethstats',
-              '"XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
               process.arch === 'x64' ? '1024' : '512'
             ]
               : ['--unsafe-transactions'];
@@ -524,11 +524,11 @@ class EthereumNode extends EventEmitter {
         args = args.concat(nodeOptions);
       }
 
-      let gensis = ['account','list']
+      // let gensis = ['account','list']
       // let gensis = ['init','genesis.json']
-      // let gensis = ['account','new','--password','password.txt']
+      let gensis = ['account','new','--password','password.txt']
 
-      ethereumNodeLog.trace('Spawn', binPath, args);
+      ethereumNodeLog.info('Spawn', binPath, args);
       ethereumNodeLog.info('Spawn', binPath, gensis);
       const proc1 = spawn(binPath, gensis);
       const proc = spawn(binPath, args);
