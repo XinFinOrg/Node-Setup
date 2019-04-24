@@ -20,7 +20,7 @@ import logger from './utils/logger';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'ropsten';
+const DEFAULT_NETWORK = 'main';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
@@ -524,11 +524,30 @@ class EthereumNode extends EventEmitter {
         args = args.concat(nodeOptions);
       }
 
-      ethereumNodeLog.trace('Spawn', binPath, args);
+      let gensis = ['account','list']
+      // let gensis = ['init','genesis.json']
+      // let gensis = ['account','new','--password','password.txt']
 
+      ethereumNodeLog.trace('Spawn', binPath, args);
+      ethereumNodeLog.info('Spawn', binPath, gensis);
+      const proc1 = spawn(binPath, gensis);
       const proc = spawn(binPath, args);
+      
 
       proc.once('error', error => {
+        if (this.state === STATES.STARTING) {
+          this.state = STATES.ERROR;
+
+          ethereumNodeLog.info('Node startup error');
+
+          // TODO: detect this properly 
+          // this.emit('nodeBinaryNotFound');
+
+          reject(error);
+        }
+      });
+
+      proc1.once('error', error => {
         if (this.state === STATES.STARTING) {
           this.state = STATES.ERROR;
 
@@ -552,6 +571,16 @@ class EthereumNode extends EventEmitter {
         this.emit('data', data);
       });
 
+      proc1.stdout.on('data', data => {
+        ethereumNodeLog.info('Got stdout data', data.toString());
+        this.emit('data', data);
+      });
+
+      proc1.stderr.on('data', data => {
+        ethereumNodeLog.info('Got stderr data', data.toString());
+        ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
+        this.emit('data', data);
+      });
       // when data is first received
       this.once('data', () => {
         /*
