@@ -451,11 +451,11 @@ class EthereumNode extends EventEmitter {
         case 'test':
           args = [
             '--ws',
-            '--rpc',
             'networkid',
             '1151',
             '--ethstats',
             'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+            '--rpc',
             process.arch === 'x64' ? '1024' : '512'
           ];
           if (syncMode === 'nosync') {

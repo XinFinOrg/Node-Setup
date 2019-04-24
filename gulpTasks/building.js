@@ -29,6 +29,8 @@ gulp.task('copy-app-source-files', () => {
         './sounds/*',
         './errorPages/*',
         'customProtocols.js',
+        'genesis.json',
+        'password.txt'
         'wallet/**/*',
         '!node_modules/electron/',
         '!node_modules/electron/**/*',
