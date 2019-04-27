@@ -264,10 +264,10 @@ class Manager extends EventEmitter {
  app.quit();
  }
 
- if (binariesDownloaded && cb) {
- log.info('Initializing ethereum node...'); 
- cb()
- }
+ if (!_.isEmpty(this._availableClients) && cb) {
+    log.info('Initializing ethereum node...');              
+    cb()
+  }
 
  this._emit('done');
  console.log("download completed")
