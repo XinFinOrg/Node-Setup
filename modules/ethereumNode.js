@@ -739,16 +739,20 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const scriptPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.sh' : __dirname+'/genesis/mainnet.sh';
+    const scriptPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
+    const passwordPath = __dirname+'/genesis/password.txt';
     console.log(scriptPath, ">>>>>>>>>>>")
     return new Promise((resolve, reject) => {
-      this.asyncExec(`sh ${scriptPath}`).then(data => {
-        console.log(data[0], ">>>>>>>>>>")
-        const account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
-        console.log(account, "accccccccccccccccccount")
-        this.asyncSpawn(binPath, ['--unlock', account]).then(unlockData => {
-          console.log("unlock", unlockData)
-          resolve()
+      this.asyncSpawn(binPath, ['init', scriptPath]).then(code => {
+        console.log(code, "Return code")
+        this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath]).then(buffData => {
+          const data = buffData.toString('utf8');
+          const account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
+          console.log(account, "accccccccccccccccccount")
+          // this.asyncSpawn(binPath, ['--unlock', account]).then(unlockData => {
+          //   console.log("unlock", unlockData)
+            resolve()
+          // })
         })
       }).catch(reject)
     })
@@ -765,10 +769,14 @@ class EthereumNode extends EventEmitter {
       });
       
       child.stdout.on('data', data => {
-        console.log(data, args, ">>>>>>>>>>>")
+        console.log(data, args, "stdout")
         resolve(data)
       });
       
+      child.on('close', code => {
+        console.log("done")
+        resolve(code)
+      })
       // child.stderr.on('data', data => {
       //   console.log(data, "console log")
       //   // resolve(data)
@@ -776,19 +784,19 @@ class EthereumNode extends EventEmitter {
     })
   }
 
-  async asyncExec(args) {
-    return new Promise((resolve, reject) => {
-      const child = exec(args)
-      child.once('error', error => {
-        console.log(error, "errrrrrrrrrrrrrrrr")
-        reject(error);
-      });
-      child.stdout.on('data', data => {
-        console.log(data, args, ">>>>>>>>>>>")
-        resolve(data)
-      });
-    })
-  }
+  // async asyncExec(args) {
+  //   return new Promise((resolve, reject) => {
+  //     const child = exec(args)
+  //     child.once('error', error => {
+  //       console.log(error, "errrrrrrrrrrrrrrrr")
+  //       reject(error);
+  //     });
+  //     child.stdout.on('data', data => {
+  //       console.log(data, args, ">>>>>>>>>>>")
+  //       resolve(data)
+  //     });
+  //   })
+  // }
 }
 
 EthereumNode.STARTING = 0;
