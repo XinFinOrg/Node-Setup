@@ -161,13 +161,13 @@ class Settings {
     ipcPath = this.userHomePath;
 
     if (process.platform === 'darwin') {
-      ipcPath += '/Library/Ethereum/XDC.ipc';
+      ipcPath += '/Library/XDC/XDC.ipc';
     } else if (
       process.platform === 'freebsd' ||
       process.platform === 'linux' ||
       process.platform === 'sunos'
     ) {
-      ipcPath += '/.ethereum/XDC.ipc';
+      ipcPath += '/.XDC/XDC.ipc';
     } else if (process.platform === 'win32') {
       ipcPath = '\\\\.\\pipe\\XDC.ipc';
     }

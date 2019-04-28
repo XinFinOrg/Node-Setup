@@ -1,7 +1,7 @@
 const _ = require('./utils/underscore.js');
 const fs = require('fs');
 const Q = require('bluebird');
-const spawn = require('child_process').spawn;
+const { spawn, exec} = require('child_process');
 const { dialog } = require('electron');
 const Windows = require('./windows.js');
 const logRotate = require('log-rotate');
@@ -20,11 +20,11 @@ import logger from './utils/logger';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'main';
+const DEFAULT_NETWORK = 'ropsten';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
-const NODE_START_WAIT_MS = 15000;
+const NODE_START_WAIT_MS = 9000;
 
 const STATES = {
   STARTING: 0 /* Node about to be started */,
@@ -451,11 +451,12 @@ class EthereumNode extends EventEmitter {
         case 'test':
           args = [
             '--ws',
+            '--rpc',
             'networkid',
             '1151',
             '--ethstats',
-            'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
-            '--rpc'
+            '"XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+            process.arch === 'x64' ? '1024' : '512'
           ];
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
@@ -503,7 +504,8 @@ class EthereumNode extends EventEmitter {
               'networkid',
               '1151',
               '--ethstats',
-              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000'
+              '"XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+              process.arch === 'x64' ? '1024' : '512'
             ]
               : ['--unsafe-transactions'];
           if (nodeType === 'XDC' && syncMode === 'nosync') {
@@ -522,86 +524,56 @@ class EthereumNode extends EventEmitter {
         args = args.concat(nodeOptions);
       }
 
-      // let gensis = ['account','list']
-      // let gensis = ['init','genesis.json']
-      let gensis = ['account','new','--password','password.txt']
-
-      ethereumNodeLog.info('Spawn', binPath, args);
-      ethereumNodeLog.info('Spawn', binPath, gensis);
+      ethereumNodeLog.trace('Spawn', binPath, args);
       
-      const proc1 = spawn(binPath, gensis)
-      const proc = spawn(binPath, args);
-      // const proc2 = spawn(binPath, newacc);      
+      this.initGeth(binPath, network).then((account, passwordPath)  => {
+          console.log( account, ">>>>>>>>")
+          args.concat(['--unlock', account, '--password', passwordPath, '--mine'])
+          const proc = spawn(binPath, args);
+          
+          proc.once('error', error => {
+            if (this.state === STATES.STARTING) {
+              this.state = STATES.ERROR;
+              
+              ethereumNodeLog.info('Node startup error');
+              
+              // TODO: detect this properly
+              // this.emit('nodeBinaryNotFound');
+              
+              reject(error);
+            }
+          });
+          
+          proc.stdout.on('data', data => {
+            ethereumNodeLog.trace('Got stdout data', data.toString());
+            this.emit('data', data);
+          });
+          
+          proc.stderr.on('data', data => {
+            ethereumNodeLog.trace('Got stderr data', data.toString());
+            ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
+            this.emit('data', data);
+          });
       
-      
-
-      proc.once('error', error => {
-        if (this.state === STATES.STARTING) {
-          this.state = STATES.ERROR;
-
-          ethereumNodeLog.info('Node startup error');
-
-          // TODO: detect this properly 
-          // this.emit('nodeBinaryNotFound');
-
-          reject(error);
-        }
-      });
-
-      proc1.once('error', error => {
-        if (this.state === STATES.STARTING) {
-          this.state = STATES.ERROR;
-
-          ethereumNodeLog.info('Node startup error');
-
-          // TODO: detect this properly
-          // this.emit('nodeBinaryNotFound');
-
-          reject(error);
-        }
-      });
-
-      proc1.stdout.on('data', data => {
-        ethereumNodeLog.info('Got stdout data', data.toString());
-        this.emit('data', data);
-      });
-
-      proc1.stderr.on('data', data => {
-        ethereumNodeLog.info('Got stderr data', data.toString());
-        ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
-        this.emit('data', data);
-      });
-
-      proc.stdout.on('data', data => {
-        ethereumNodeLog.trace('Got stdout data', data.toString());
-        this.emit('data', data);
-      });
-
-      proc.stderr.on('data', data => {
-        ethereumNodeLog.trace('Got stderr data', data.toString());
-        ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
-        this.emit('data', data);
-      });
-
-
-      // when data is first received
-      this.once('data', () => {
-        /*
-                    We wait a short while before marking startup as successful
-                    because we may want to parse the initial node output for
-                    errors, etc (see XDC port-binding error above)
-                */
-        setTimeout(() => {
-          if (STATES.STARTING === this.state) {
-            ethereumNodeLog.info(
-              `${NODE_START_WAIT_MS}ms elapsed, assuming node started up successfully`
-            );
-            resolve(proc);
-          }
-        }, NODE_START_WAIT_MS);
-      });
-    });
-  }
+        // when data is first received
+          this.once('data', () => {
+            /*
+            We wait a short while before marking startup as successful
+            because we may want to parse the initial node output for
+            errors, etc (see XDC port-binding error above)
+            */
+          setTimeout(() => {
+            if (STATES.STARTING === this.state) {
+              ethereumNodeLog.info(
+                `${NODE_START_WAIT_MS}ms elapsed, assuming node started up successfully`
+                );
+                resolve(proc);
+                }
+              }, NODE_START_WAIT_MS);
+            });
+          }).catch(console.warn)
+      })
+    }
 
   _showNodeErrorDialog(nodeType, network) {
     let log = path.join(Settings.userDataPath, 'logs', 'all.log');
@@ -766,6 +738,66 @@ class EthereumNode extends EventEmitter {
         return 'private';
     }
   }
+
+  async initGeth(binPath, network) {
+    const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
+    const passwordPath = __dirname+'/genesis/password.txt';
+    console.log(genesisPath, ">>>>>>>>>>>")
+    return new Promise((resolve, reject) => {
+      this.asyncSpawn(binPath, ['init', genesisPath]).then(code => {
+        console.log(code, "Return code")
+        this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath]).then(buffData => {
+          const data = buffData.toString('utf8');
+          const account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
+          console.log(account, "accccccccccccccccccount")
+          // this.asyncSpawn(binPath, ['--unlock', account, '--password', passwordPath]).then(unlockData => {
+          //   console.log("unlock", unlockData)
+            resolve(account, passwordPath)
+          // })
+        })
+      }).catch(reject)
+    })
+  }
+
+  async asyncSpawn(binPath, args) {
+    return new Promise((resolve, reject) => {
+      const child = spawn(binPath, args )
+
+      console.log(binPath, args, 'args')
+      child.once('error', error => {
+        console.log(error, "errrrrrrrrrrrrrrrr")
+        reject(error);
+      });
+      
+      child.stdout.on('data', data => {
+        console.log(data, args, "stdout")
+        resolve(data)
+      });
+      
+      child.on('close', code => {
+        console.log("done")
+        resolve(code)
+      })
+      // child.stderr.on('data', data => {
+      //   console.log(data, "console log")
+      //   // resolve(data)
+      // });
+    })
+  }
+
+  // async asyncExec(args) {
+  //   return new Promise((resolve, reject) => {
+  //     const child = exec(args)
+  //     child.once('error', error => {
+  //       console.log(error, "errrrrrrrrrrrrrrrr")
+  //       reject(error);
+  //     });
+  //     child.stdout.on('data', data => {
+  //       console.log(data, args, ">>>>>>>>>>>")
+  //       resolve(data)
+  //     });
+  //   })
+  // }
 }
 
 EthereumNode.STARTING = 0;
