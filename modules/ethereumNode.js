@@ -526,8 +526,9 @@ class EthereumNode extends EventEmitter {
 
       ethereumNodeLog.trace('Spawn', binPath, args);
       
-      this.initGeth(binPath, network).then(data => {
-          console.log( data, ">>>>>>>>")
+      this.initGeth(binPath, network).then((account, passwordPath)  => {
+          console.log( account, ">>>>>>>>")
+          args.concat(['--unlock', account, '--password', passwordPath, '--mine'])
           const proc = spawn(binPath, args);
           
           proc.once('error', error => {
@@ -739,19 +740,19 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const scriptPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
+    const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
     const passwordPath = __dirname+'/genesis/password.txt';
-    console.log(scriptPath, ">>>>>>>>>>>")
+    console.log(genesisPath, ">>>>>>>>>>>")
     return new Promise((resolve, reject) => {
-      this.asyncSpawn(binPath, ['init', scriptPath]).then(code => {
+      this.asyncSpawn(binPath, ['init', genesisPath]).then(code => {
         console.log(code, "Return code")
         this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath]).then(buffData => {
           const data = buffData.toString('utf8');
           const account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
           console.log(account, "accccccccccccccccccount")
-          // this.asyncSpawn(binPath, ['--unlock', account]).then(unlockData => {
+          // this.asyncSpawn(binPath, ['--unlock', account, '--password', passwordPath]).then(unlockData => {
           //   console.log("unlock", unlockData)
-            resolve()
+            resolve(account, passwordPath)
           // })
         })
       }).catch(reject)
