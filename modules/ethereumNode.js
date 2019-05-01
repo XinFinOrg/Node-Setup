@@ -744,18 +744,24 @@ class EthereumNode extends EventEmitter {
     const passwordPath = __dirname+'/genesis/password.txt';
     console.log(genesisPath, ">>>>>>>>>>>")
     return new Promise((resolve, reject) => {
-      this.asyncSpawn(binPath, ['init', genesisPath]).then(code => {
+      this.asyncSpawn(binPath, ['init', genesisPath])
+      .then(code => {
         console.log(code, "Return code")
-        this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath]).then(buffData => {
-          const data = buffData.toString('utf8');
-          const account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
-          console.log(account, "accccccccccccccccccount")
-          // this.asyncSpawn(binPath, ['--unlock', account, '--password', passwordPath]).then(unlockData => {
-          //   console.log("unlock", unlockData)
-            resolve(account, passwordPath)
-          // })
-        })
-      }).catch(reject)
+        return this.asyncSpawn(binPath, ['account', 'list'])
+      }) 
+      .then(list => {
+        console.log(list, ">>>>>>>>>>>>>>>>>>list");
+        if (list) return list
+        else return this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath])
+      })    
+      .then(buffData => {
+        const data = buffData.toString('utf8');
+        let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
+        console.log(account, "accccccccccccccccccount")
+        if (account.indexOf('xdc') < 0) account = 'xdc'.concat(account) 
+        resolve(account, passwordPath)
+      })
+      .catch(reject)
     })
   }
 
@@ -775,7 +781,7 @@ class EthereumNode extends EventEmitter {
       });
       
       child.on('close', code => {
-        console.log("done")
+        // console.log("done")
         resolve(code)
       })
       // child.stderr.on('data', data => {
