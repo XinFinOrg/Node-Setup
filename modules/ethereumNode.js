@@ -452,10 +452,10 @@ class EthereumNode extends EventEmitter {
           args = [
             '--ws',
             '--rpc',
-            'networkid',
+            '--networkid',
             '1151',
             '--ethstats',
-            '"XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+            'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
             process.arch === 'x64' ? '1024' : '512'
           ];
           if (syncMode === 'nosync') {
@@ -501,10 +501,10 @@ class EthereumNode extends EventEmitter {
               '--rpc',
               '--minerthreads',
               '1',
-              'networkid',
+              '--networkid',
               '1151',
               '--ethstats',
-              '"XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
+              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
               process.arch === 'x64' ? '1024' : '512'
             ]
               : ['--unsafe-transactions'];
@@ -526,9 +526,10 @@ class EthereumNode extends EventEmitter {
 
       ethereumNodeLog.trace('Spawn', binPath, args);
       
-      this.initGeth(binPath, network).then((account, passwordPath)  => {
+      this.initGeth(binPath, network).then(({account, passwordPath})  => {
           console.log( account, ">>>>>>>>")
-          args.concat(['--unlock', account, '--password', passwordPath, '--mine'])
+          args = args.concat(['--unlock', account, '--password', passwordPath])
+          console.log(args, "<<<<<<<<<<<<<<<<<<<<<<")
           const proc = spawn(binPath, args);
           
           proc.once('error', error => {
@@ -741,8 +742,8 @@ class EthereumNode extends EventEmitter {
 
   async initGeth(binPath, network) {
     const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
-    const passwordPath = __dirname+'/genesis/password.txt';
     console.log(genesisPath, ">>>>>>>>>>>")
+    const passwordPath = __dirname+'/genesis/password.txt';
     return new Promise((resolve, reject) => {
       this.asyncSpawn(binPath, ['init', genesisPath])
       .then(code => {
@@ -759,7 +760,7 @@ class EthereumNode extends EventEmitter {
         let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
         console.log(account, "accccccccccccccccccount")
         if (account.indexOf('xdc') < 0) account = 'xdc'.concat(account) 
-        resolve(account, passwordPath)
+        resolve({account, passwordPath})
       })
       .catch(reject)
     })
