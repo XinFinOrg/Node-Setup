@@ -171,7 +171,7 @@ function onReady() {
 
   ipcProviderBackend.init();
 
-  ethereumNode.init();
+  ClientBinaryManager.init(false, () => ethereumNode.init());
 
   ethereumNodeRemote.start();
 
@@ -188,7 +188,6 @@ function onReady() {
 
   checkForLegacyChain();
 
-  ClientBinaryManager.init();
 
   if (Settings.enableSwarmOnStart) {
     store.dispatch(toggleSwarm());

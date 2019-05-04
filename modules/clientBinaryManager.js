@@ -24,13 +24,13 @@ class Manager extends EventEmitter {
     this._availableClients = {};
   }
 
-  init(restart) {
+  init(restart, cb) {
     log.info('Initializing...');
 
     // check every hour
     setInterval(() => this._checkForNewConfig(true), 1000 * 60 * 60*60);
 
-    return this._checkForNewConfig(restart);
+    return this._checkForNewConfig(restart, cb);
   }
 
   getClient(clientId) {
@@ -46,7 +46,7 @@ class Manager extends EventEmitter {
     );
   }
 
-  _checkForNewConfig(restart) {
+  _checkForNewConfig(restart, cb) {
     const nodeType = 'XDC';
     let binariesDownloaded = false;
     let nodeInfo;
@@ -264,7 +264,14 @@ class Manager extends EventEmitter {
               app.quit();
             }
 
+            if (!_.isEmpty(this._availableClients) && cb) {
+              console.log(this._availableClients, "available client")
+              log.info('Initializing ethereum node...');              
+              cb()
+            }
+
             this._emit('done');
+            console.log("download completed")
           });
       })
       .catch(err => {
