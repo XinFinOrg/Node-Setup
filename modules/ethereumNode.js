@@ -7,6 +7,7 @@ const Windows = require('./windows.js');
 const logRotate = require('log-rotate');
 const path = require('path');
 const EventEmitter = require('events').EventEmitter;
+const shell = require('shelljs');
 const Sockets = require('./socketManager');
 const ClientBinaryManager = require('./clientBinaryManager');
 import Settings from './settings';
@@ -748,9 +749,12 @@ class EthereumNode extends EventEmitter {
   async initGeth(binPath, network) {
     const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
     console.log(genesisPath, ">>>>>>>>>>>")
-    const passwordPath = __dirname+'/genesis/password.txt';
+    const actualGenesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
+    shell.cp(genesisPath, actualGenesisPath);
+    const passwordPath = `${binPath.substring(0, binPath.length - 3)}password.txt`;
+    shell.cp(__dirname+'/genesis/password.txt', passwordPath);
     return new Promise((resolve, reject) => {
-      this.asyncSpawn(binPath, ['init', genesisPath])
+      this.asyncSpawn(binPath, ['init', actualGenesisPath])
       .then(code => {
         console.log(code, "Return code")
         return this.asyncSpawn(binPath, ['account', 'list'])
