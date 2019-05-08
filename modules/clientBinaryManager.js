@@ -14,6 +14,8 @@ const log = require('./utils/logger').create('ClientBinaryManager');
 // should be       'https://raw.githubusercontent.com/ethereum/mist/master/clientBinaries.json'
 const BINARY_URL =
   'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/master/clientBinaries.json';
+const TESTNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/fix/client-binaries-download/modules/genesis/testnet.json';
+const MAINNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/fix/client-binaries-download/modules/genesis/mainnet.json';
 
 // const ALLOWED_DOWNLOAD_URLS_REGEX = /^https:\/\/(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)?ethereum\.org\/|gethstore\.blob\.core\.windows\.net\/|bintray\.com\/artifact\/download\/karalabe\/ethereum\/)(?:.+)/; // eslint-disable-line max-len
 
@@ -56,9 +58,33 @@ class Manager extends EventEmitter {
     this._emit('loadConfig', 'Fetching remote client config');
 
     // fetch config
-    return got(BINARY_URL, {
+    return got(MAINNET_URL, {
       timeout: 6000,
       json: true
+    }).then((res) => {
+      fs.writeFileSync(
+        path.join(Settings.userDataPath, 'mainnet.json'),
+        JSON.stringify(res.data, null, 2)
+      );
+      return got(TESTNET_URL, {
+        timeout: 6000,
+        json: true
+      })
+    }).then((res) => {
+      fs.writeFileSync(
+        path.join(Settings.userDataPath, 'testnet.json'),
+        JSON.stringify(res.data, null, 2)
+      );
+      fs.writeFileSync(
+        path.join(Settings.userDataPath, 'password.txt'),
+        "\n",
+        'utf8'
+      );
+    }).then(() => {
+      return got(BINARY_URL, {
+        timeout: 6000,
+        json: true
+      })
     })
       .then(res => {
         if (!res || _.isEmpty(res.body)) {
@@ -234,7 +260,6 @@ class Manager extends EventEmitter {
 
               return Q.map(_.values(clients), c => {
                 binariesDownloaded = true;
-
                 return mgr.download(c.id, {
                   downloadFolder: path.join(Settings.userDataPath, 'binaries')
                   // urlRegex: ALLOWED_DOWNLOAD_URLS_REGEX

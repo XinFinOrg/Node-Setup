@@ -17,6 +17,7 @@ import {
 } from './core/nodes/actions';
 
 import logger from './utils/logger';
+import { settings } from 'cluster';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
@@ -746,18 +747,12 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
+    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'ropsten' ? 'testnet.json' : 'mainnet.json');
     ethereumNodeLog.info(genesisPath, ">>>>>>>>>>>")
-    const actualGenesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
-    const passwordPath = `${binPath.substring(0, binPath.length - 3)}password.txt`;
+    // const genesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
+    const passwordPath = path.join(Settings.userDataPath, 'password.txt');
     return new Promise((resolve, reject) => {
-      this.asyncExec(`cp ${genesisPath} ${actualGenesisPath}`)
-      .then(() => {
-        return this.asyncExec(`cp ${__dirname}/genesis/password.txt ${passwordPath}`)
-      })
-      .then(() => {
-        return this.asyncSpawn(binPath, ['init', actualGenesisPath])
-      })
+      this.asyncSpawn(binPath, ['init', genesisPath])
       .then(code => {
         ethereumNodeLog.info(code, "Return code")
         return this.asyncSpawn(binPath, ['account', 'list'])
