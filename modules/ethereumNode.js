@@ -518,7 +518,7 @@ class EthereumNode extends EventEmitter {
           } else {
             args.push('--syncmode', syncMode,process.arch === 'x64' ? '1024' : '512');
           }
-          console.log(`Args ${args}`)
+          ethereumNodeLog.info(`Args ${args}`)
       }
 
       const nodeOptions = Settings.nodeOptions;
@@ -532,9 +532,9 @@ class EthereumNode extends EventEmitter {
       ethereumNodeLog.trace('Spawn', binPath, args);
       
       this.initGeth(binPath, network).then(({account, passwordPath})  => {
-          console.log( account, ">>>>>>>>")
+          ethereumNodeLog.info( account, ">>>>>>>>")
           args = args.concat(['--unlock', account, '--password', passwordPath])
-          console.log(args, "<<<<<<<<<<<<<<<<<<<<<<")
+          ethereumNodeLog.info(args, "<<<<<<<<<<<<<<<<<<<<<<")
           const proc = spawn(binPath, args);
           
           proc.once('error', error => {
@@ -747,7 +747,7 @@ class EthereumNode extends EventEmitter {
 
   async initGeth(binPath, network) {
     const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
-    console.log(genesisPath, ">>>>>>>>>>>")
+    ethereumNodeLog.info(genesisPath, ">>>>>>>>>>>")
     const actualGenesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
     const passwordPath = `${binPath.substring(0, binPath.length - 3)}password.txt`;
     return new Promise((resolve, reject) => {
@@ -759,18 +759,18 @@ class EthereumNode extends EventEmitter {
         return this.asyncSpawn(binPath, ['init', actualGenesisPath])
       })
       .then(code => {
-        console.log(code, "Return code")
+        ethereumNodeLog.info(code, "Return code")
         return this.asyncSpawn(binPath, ['account', 'list'])
       }) 
       .then(list => {
-        console.log(list, ">>>>>>>>>>>>>>>>>>list");
+        ethereumNodeLog.info(list, ">>>>>>>>>>>>>>>>>>list");
         if (list) return list
         else return this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath])
       })    
       .then(buffData => {
         const data = buffData.toString('utf8');
         let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
-        console.log(account, "accccccccccccccccccount")
+        ethereumNodeLog.info(account, "accccccccccccccccccount")
         if (account.indexOf('xdc') < 0) account = 'xdc'.concat(account) 
         resolve({account, passwordPath})
       })
@@ -782,23 +782,23 @@ class EthereumNode extends EventEmitter {
     return new Promise((resolve, reject) => {
       const child = spawn(binPath, args )
 
-      console.log(binPath, args, 'args')
+      ethereumNodeLog.info(binPath, args, 'args')
       child.once('error', error => {
-        console.log(error, "errrrrrrrrrrrrrrrr")
+        ethereumNodeLog.info(error, "errrrrrrrrrrrrrrrr")
         reject(error);
       });
       
       child.stdout.on('data', data => {
-        console.log(data, args, "stdout")
+        ethereumNodeLog.info(data, args, "stdout")
         resolve(data)
       });
       
       child.on('close', code => {
-        // console.log("done")
+        // ethereumNodeLog.info("done")
         resolve(code)
       })
       // child.stderr.on('data', data => {
-      //   console.log(data, "console log")
+      //   ethereumNodeLog.info(data, "console log")
       //   // resolve(data)
       // });
     })
@@ -806,18 +806,18 @@ class EthereumNode extends EventEmitter {
 
   async asyncExec(args) {
     return new Promise((resolve, reject) => {
-      console.log("\n\n", args, "argssssssss")
+      ethereumNodeLog.info("\n\n", args, "argssssssss")
       const child = exec(args)
       child.once('error', error => {
-        console.log(error, "errrrrrrrrrrrrrrrr")
+        ethereumNodeLog.info(error, "errrrrrrrrrrrrrrrr")
         reject(error);
       });
       child.stdout.on('data', data => {
-        console.log(data, args, ">>>>>>>>>>>")
+        ethereumNodeLog.info(data, args, ">>>>>>>>>>>")
         resolve(data)
       });
       child.on('close', code => {
-        console.log("done")
+        ethereumNodeLog.info("done")
         resolve(code)
       })
     })
