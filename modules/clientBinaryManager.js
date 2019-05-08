@@ -62,9 +62,10 @@ class Manager extends EventEmitter {
       timeout: 6000,
       json: true
     }).then((res) => {
+      console.log(res)
       fs.writeFileSync(
         path.join(Settings.userDataPath, 'mainnet.json'),
-        JSON.stringify(res.data, null, 2)
+        JSON.stringify(res.body, null, 2)
       );
       return got(TESTNET_URL, {
         timeout: 6000,
@@ -73,7 +74,7 @@ class Manager extends EventEmitter {
     }).then((res) => {
       fs.writeFileSync(
         path.join(Settings.userDataPath, 'testnet.json'),
-        JSON.stringify(res.data, null, 2)
+        JSON.stringify(res.body, null, 2)
       );
       fs.writeFileSync(
         path.join(Settings.userDataPath, 'password.txt'),
