@@ -32,7 +32,8 @@ gulp.task('copy-app-source-files', () => {
         'wallet/**/*',
         '!node_modules/electron/',
         '!node_modules/electron/**/*',
-        '!./tests/**/*'
+        '!./tests/**/*',
+        './modules/genesis/*'
       ],
       {
         base: './'
@@ -50,7 +51,7 @@ gulp.task('transpile-main', () => {
 
 gulp.task('transpile-modules', () => {
   return gulp
-    .src('./modules/**')
+    .src('./modules/**/*.js')
     .pipe(babel({ presets: ['es2016-node5'] }))
     .pipe(gulp.dest(`./dist_${type}/app/modules`));
 });

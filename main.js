@@ -59,7 +59,7 @@ if (global.mode === 'wallet') {
     : 'http://localhost:3050';
   global.interfacePopupsUrl = Settings.inProductionMode
     ? `file://${__dirname}/interface/index.html`
-    : 'http://localhost:1000';
+    : 'http://localhost:3000';
 
   // - MIST
 } else {
@@ -67,7 +67,7 @@ if (global.mode === 'wallet') {
 
   let url = Settings.inProductionMode
     ? `file://${__dirname}/interface/index.html`
-    : 'http://localhost:1000';
+    : 'http://localhost:3000';
 
   if (Settings.cli.resetTabs) {
     url += '?reset-tabs=true';
@@ -171,9 +171,9 @@ function onReady() {
 
   ipcProviderBackend.init();
 
-  ethereumNode.init();
+  ClientBinaryManager.init(false, () => ethereumNode.init());
 
-  ethereumNodeRemote.start();
+  // ethereumNodeRemote.start();
 
   // TODO: Settings.language relies on global.config object being set
   store.dispatch(setLanguageOnMain(Settings.language));
@@ -188,7 +188,6 @@ function onReady() {
 
   checkForLegacyChain();
 
-  ClientBinaryManager.init();
 
   if (Settings.enableSwarmOnStart) {
     store.dispatch(toggleSwarm());
