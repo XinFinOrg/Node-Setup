@@ -822,3 +822,4 @@ class EthereumNode extends EventEmitter {
 EthereumNode.STARTING = 0;
 
 module.exports = new EthereumNode();
+
