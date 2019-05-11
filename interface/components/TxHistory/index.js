@@ -71,7 +71,7 @@ class TxHistory extends Component {
       case 1:
         return 'Main';
       case 3:
-        return 'Ropsten';
+        return 'Apothem';
       case 4:
         return 'Rinkeby';
       case 42:

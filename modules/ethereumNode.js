@@ -21,7 +21,7 @@ import { settings } from 'cluster';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'ropsten';
+const DEFAULT_NETWORK = 'apothem';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
@@ -101,7 +101,7 @@ class EthereumNode extends EventEmitter {
   }
 
   get isTestNetwork() {
-    return this.network === 'test' || this.network === 'ropsten';
+    return this.network === 'test' || this.network === 'apothem';
   }
 
   get isRinkebyNetwork() {
@@ -301,7 +301,7 @@ class EthereumNode extends EventEmitter {
   _start(nodeType, network, syncMode) {
     ethereumNodeLog.info(`Start node: ${nodeType} ${network} ${syncMode}`);
 
-    if (network === 'test' || network === 'ropsten') {
+    if (network === 'test' || network === 'apothem') {
       ethereumNodeLog.debug('Node will connect to the test network');
     }
 
@@ -446,8 +446,8 @@ class EthereumNode extends EventEmitter {
       let args;
 
       switch (network) {
-        // Starts Ropsten network
-        case 'ropsten':
+        // Starts Apothem network
+        case 'apothem':
         // fall through
         case 'test':
           args = [
@@ -738,7 +738,7 @@ class EthereumNode extends EventEmitter {
       case '0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177':
         return 'rinkeby';
       case '0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d':
-        return 'ropsten';
+        return 'apothem';
       case '0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9':
         return 'kovan';
       default:
@@ -747,7 +747,7 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'ropsten' ? 'testnet.json' : 'mainnet.json');
+    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'apothem' ? 'testnet.json' : 'mainnet.json');
     ethereumNodeLog.info(genesisPath, ">>>>>>>>>>>")
     // const genesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
     const passwordPath = path.join(Settings.userDataPath, 'password.txt');

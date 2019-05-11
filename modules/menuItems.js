@@ -575,11 +575,11 @@ let menuTempl = function(webviews) {
       {
         label: 'XinFin - Test network',
         accelerator: 'CommandOrControl+Alt+2',
-        checked: store.getState().nodes.network === 'ropsten',
+        checked: store.getState().nodes.network === 'apothem',
         enabled: store.getState().nodes.network !== 'private',
         type: 'checkbox',
         click() {
-          changeNodeNetwork('ropsten', webviews);
+          changeNodeNetwork('apothem', webviews);
         }
       }
       // {
@@ -648,7 +648,7 @@ let menuTempl = function(webviews) {
     ]
   });
 
-  // Enables mining menu: only in Solo mode and Ropsten network (testnet)
+  // Enables mining menu: only in Solo mode and Apothem network (testnet)
   if (
     ethereumNode.isOwnNode &&
     (ethereumNode.isTestNetwork || ethereumNode.isDevNetwork)
