@@ -14,8 +14,10 @@ const log = require('./utils/logger').create('ClientBinaryManager');
 // should be       'https://raw.githubusercontent.com/ethereum/mist/master/clientBinaries.json'
 const BINARY_URL =
   'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/master/clientBinaries.json';
+const TESTNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/fix/client-binaries-download/modules/genesis/testnet.json';
+const MAINNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/fix/client-binaries-download/modules/genesis/mainnet.json';
 
-const ALLOWED_DOWNLOAD_URLS_REGEX = /^https:\/\/(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)?ethereum\.org\/|gethstore\.blob\.core\.windows\.net\/|bintray\.com\/artifact\/download\/karalabe\/ethereum\/)(?:.+)/; // eslint-disable-line max-len
+// const ALLOWED_DOWNLOAD_URLS_REGEX = /^https:\/\/(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)?ethereum\.org\/|gethstore\.blob\.core\.windows\.net\/|bintray\.com\/artifact\/download\/karalabe\/ethereum\/)(?:.+)/; // eslint-disable-line max-len
 
 class Manager extends EventEmitter {
   constructor() {
@@ -24,13 +26,13 @@ class Manager extends EventEmitter {
     this._availableClients = {};
   }
 
-  init(restart) {
+  init(restart, cb) {
     log.info('Initializing...');
 
     // check every hour
     setInterval(() => this._checkForNewConfig(true), 1000 * 60 * 60*60);
 
-    return this._checkForNewConfig(restart);
+    return this._checkForNewConfig(restart, cb);
   }
 
   getClient(clientId) {
@@ -46,7 +48,7 @@ class Manager extends EventEmitter {
     );
   }
 
-  _checkForNewConfig(restart) {
+  _checkForNewConfig(restart, cb) {
     const nodeType = 'XDC';
     let binariesDownloaded = false;
     let nodeInfo;
@@ -56,9 +58,34 @@ class Manager extends EventEmitter {
     this._emit('loadConfig', 'Fetching remote client config');
 
     // fetch config
-    return got(BINARY_URL, {
+    return got(MAINNET_URL, {
       timeout: 6000,
       json: true
+    }).then((res) => {
+      console.log(res)
+      fs.writeFileSync(
+        path.join(Settings.userDataPath, 'mainnet.json'),
+        JSON.stringify(res.body, null, 2)
+      );
+      return got(TESTNET_URL, {
+        timeout: 6000,
+        json: true
+      })
+    }).then((res) => {
+      fs.writeFileSync(
+        path.join(Settings.userDataPath, 'testnet.json'),
+        JSON.stringify(res.body, null, 2)
+      );
+      fs.writeFileSync(
+        path.join(Settings.userDataPath, 'password.txt'),
+        "\n",
+        'utf8'
+      );
+    }).then(() => {
+      return got(BINARY_URL, {
+        timeout: 6000,
+        json: true
+      })
     })
       .then(res => {
         if (!res || _.isEmpty(res.body)) {
@@ -234,7 +261,6 @@ class Manager extends EventEmitter {
 
               return Q.map(_.values(clients), c => {
                 binariesDownloaded = true;
-
                 return mgr.download(c.id, {
                   downloadFolder: path.join(Settings.userDataPath, 'binaries')
                   // urlRegex: ALLOWED_DOWNLOAD_URLS_REGEX
@@ -264,7 +290,14 @@ class Manager extends EventEmitter {
               app.quit();
             }
 
+            if (!_.isEmpty(this._availableClients) && cb) {
+              console.log(this._availableClients, "available client")
+              log.info('Initializing ethereum node...');              
+              cb()
+            }
+
             this._emit('done');
+            console.log("download completed")
           });
       })
       .catch(err => {

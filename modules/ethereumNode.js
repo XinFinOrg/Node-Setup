@@ -17,6 +17,7 @@ import {
 } from './core/nodes/actions';
 
 import logger from './utils/logger';
+import { settings } from 'cluster';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
@@ -450,18 +451,19 @@ class EthereumNode extends EventEmitter {
         // fall through
         case 'test':
           args = [
+            '--bootnodes',
+            'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@109.169.40.129:30301,enode://ad442331848f2aaff489cf6ca1ccced5a33379f065e5efbd4a6980f9efeccecb48aba7ec8d3f80c77fa502858bc200cc8109f7bf2ce00ef22a0e8ee94a55d91e@109.169.40.128:30303,enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@5.152.223.199:30303,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@62.233.65.7:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301',
             '--ws',
-            '--rpc',
-            'networkid',
-            '1151',
             '--ethstats',
-            '"XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
-            process.arch === 'x64' ? '1024' : '512'
+            'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+            '--rpc',
+            '--networkid',
+            '1151'
           ];
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
           } else {
-            args.push('--syncmode', syncMode);
+            args.push('--syncmode', syncMode,process.arch === 'x64' ? '1024' : '512');
           }
           break;
 
@@ -497,23 +499,27 @@ class EthereumNode extends EventEmitter {
           args =
             nodeType === 'XDC'
             ? [
+              '--bootnodes',
+              'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@109.169.40.129:30301,enode://ad442331848f2aaff489cf6ca1ccced5a33379f065e5efbd4a6980f9efeccecb48aba7ec8d3f80c77fa502858bc200cc8109f7bf2ce00ef22a0e8ee94a55d91e@109.169.40.128:30303,enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@5.152.223.199:30303,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@62.233.65.7:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301',
               '--ws',
               '--rpc',
               '--minerthreads',
               '1',
-              'networkid',
+              '--targetgaslimit',
+              '420000000',
+              '--networkid',
               '1151',
               '--ethstats',
-              '"XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000"',
-              process.arch === 'x64' ? '1024' : '512'
+              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+              '--mine'
             ]
               : ['--unsafe-transactions'];
           if (nodeType === 'XDC' && syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
           } else {
-            args.push('--syncmode', syncMode);
+            args.push('--syncmode', syncMode,process.arch === 'x64' ? '1024' : '512');
           }
-          console.log(`Args ${args}`)
+          ethereumNodeLog.info(`Args ${args}`)
       }
 
       const nodeOptions = Settings.nodeOptions;
@@ -526,9 +532,10 @@ class EthereumNode extends EventEmitter {
 
       ethereumNodeLog.trace('Spawn', binPath, args);
       
-      this.initGeth(binPath, network).then((account, passwordPath)  => {
-          console.log( account, ">>>>>>>>")
-          args.concat(['--unlock', account, '--password', passwordPath, '--mine'])
+      this.initGeth(binPath, network).then(({account, passwordPath})  => {
+          ethereumNodeLog.info( account, ">>>>>>>>")
+          args = args.concat(['--unlock', account, '--password', passwordPath])
+          ethereumNodeLog.info(args, "<<<<<<<<<<<<<<<<<<<<<<")
           const proc = spawn(binPath, args);
           
           proc.once('error', error => {
@@ -740,22 +747,29 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const genesisPath = network === 'test' || network === 'ropsten' ? __dirname+'/genesis/testnet.json' : __dirname+'/genesis/mainnet.json';
-    const passwordPath = __dirname+'/genesis/password.txt';
-    console.log(genesisPath, ">>>>>>>>>>>")
+    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'ropsten' ? 'testnet.json' : 'mainnet.json');
+    ethereumNodeLog.info(genesisPath, ">>>>>>>>>>>")
+    // const genesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
+    const passwordPath = path.join(Settings.userDataPath, 'password.txt');
     return new Promise((resolve, reject) => {
-      this.asyncSpawn(binPath, ['init', genesisPath]).then(code => {
-        console.log(code, "Return code")
-        this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath]).then(buffData => {
-          const data = buffData.toString('utf8');
-          const account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
-          console.log(account, "accccccccccccccccccount")
-          // this.asyncSpawn(binPath, ['--unlock', account, '--password', passwordPath]).then(unlockData => {
-          //   console.log("unlock", unlockData)
-            resolve(account, passwordPath)
-          // })
-        })
-      }).catch(reject)
+      this.asyncSpawn(binPath, ['init', genesisPath])
+      .then(code => {
+        ethereumNodeLog.info(code, "Return code")
+        return this.asyncSpawn(binPath, ['account', 'list'])
+      }) 
+      .then(list => {
+        ethereumNodeLog.info(list, ">>>>>>>>>>>>>>>>>>list");
+        if (list) return list
+        else return this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath])
+      })    
+      .then(buffData => {
+        const data = buffData.toString('utf8');
+        let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
+        ethereumNodeLog.info(account, "accccccccccccccccccount")
+        if (account.indexOf('xdc') < 0) account = 'xdc'.concat(account) 
+        resolve({account, passwordPath})
+      })
+      .catch(reject)
     })
   }
 
@@ -763,43 +777,49 @@ class EthereumNode extends EventEmitter {
     return new Promise((resolve, reject) => {
       const child = spawn(binPath, args )
 
-      console.log(binPath, args, 'args')
+      ethereumNodeLog.info(binPath, args, 'args')
       child.once('error', error => {
-        console.log(error, "errrrrrrrrrrrrrrrr")
+        ethereumNodeLog.info(error, "errrrrrrrrrrrrrrrr")
         reject(error);
       });
       
       child.stdout.on('data', data => {
-        console.log(data, args, "stdout")
+        ethereumNodeLog.info(data, args, "stdout")
         resolve(data)
       });
       
       child.on('close', code => {
-        console.log("done")
+        // ethereumNodeLog.info("done")
         resolve(code)
       })
       // child.stderr.on('data', data => {
-      //   console.log(data, "console log")
+      //   ethereumNodeLog.info(data, "console log")
       //   // resolve(data)
       // });
     })
   }
 
-  // async asyncExec(args) {
-  //   return new Promise((resolve, reject) => {
-  //     const child = exec(args)
-  //     child.once('error', error => {
-  //       console.log(error, "errrrrrrrrrrrrrrrr")
-  //       reject(error);
-  //     });
-  //     child.stdout.on('data', data => {
-  //       console.log(data, args, ">>>>>>>>>>>")
-  //       resolve(data)
-  //     });
-  //   })
-  // }
+  async asyncExec(args) {
+    return new Promise((resolve, reject) => {
+      ethereumNodeLog.info("\n\n", args, "argssssssss")
+      const child = exec(args)
+      child.once('error', error => {
+        ethereumNodeLog.info(error, "errrrrrrrrrrrrrrrr")
+        reject(error);
+      });
+      child.stdout.on('data', data => {
+        ethereumNodeLog.info(data, args, ">>>>>>>>>>>")
+        resolve(data)
+      });
+      child.on('close', code => {
+        ethereumNodeLog.info("done")
+        resolve(code)
+      })
+    })
+  }
 }
 
 EthereumNode.STARTING = 0;
 
 module.exports = new EthereumNode();
+
