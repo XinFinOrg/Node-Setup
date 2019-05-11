@@ -173,7 +173,7 @@ function onReady() {
 
   ClientBinaryManager.init(false, () => ethereumNode.init());
 
-  ethereumNodeRemote.start();
+  // ethereumNodeRemote.start();
 
   // TODO: Settings.language relies on global.config object being set
   store.dispatch(setLanguageOnMain(Settings.language));
