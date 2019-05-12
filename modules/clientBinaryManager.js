@@ -14,8 +14,8 @@ const log = require('./utils/logger').create('ClientBinaryManager');
 // should be       'https://raw.githubusercontent.com/ethereum/mist/master/clientBinaries.json'
 const BINARY_URL =
   'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/master/clientBinaries.json';
-const TESTNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/fix/client-binaries-download/modules/genesis/testnet.json';
-const MAINNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/fix/client-binaries-download/modules/genesis/mainnet.json';
+const TESTNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/master/modules/genesis/testnet.json';
+const MAINNET_URL = 'https://raw.githubusercontent.com/XinFinOrg/Node-Setup/master/modules/genesis/mainnet.json';
 
 // const ALLOWED_DOWNLOAD_URLS_REGEX = /^https:\/\/(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)?ethereum\.org\/|gethstore\.blob\.core\.windows\.net\/|bintray\.com\/artifact\/download\/karalabe\/ethereum\/)(?:.+)/; // eslint-disable-line max-len
 

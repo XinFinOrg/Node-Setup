@@ -452,13 +452,13 @@ class EthereumNode extends EventEmitter {
         case 'test':
           args = [
             '--bootnodes',
-            'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@109.169.40.129:30301,enode://ad442331848f2aaff489cf6ca1ccced5a33379f065e5efbd4a6980f9efeccecb48aba7ec8d3f80c77fa502858bc200cc8109f7bf2ce00ef22a0e8ee94a55d91e@109.169.40.128:30303,enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@5.152.223.199:30303,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@62.233.65.7:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301',
+            'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@5.152.223.197:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
             '--ws',
             '--ethstats',
-            'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+            'XinFin-Test-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000',
             '--rpc',
             '--networkid',
-            '1151'
+            '51'
           ];
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
@@ -500,7 +500,7 @@ class EthereumNode extends EventEmitter {
             nodeType === 'XDC'
             ? [
               '--bootnodes',
-              'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@109.169.40.129:30301,enode://ad442331848f2aaff489cf6ca1ccced5a33379f065e5efbd4a6980f9efeccecb48aba7ec8d3f80c77fa502858bc200cc8109f7bf2ce00ef22a0e8ee94a55d91e@109.169.40.128:30303,enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@5.152.223.199:30303,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@62.233.65.7:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301',
+              'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
               '--ws',
               '--rpc',
               '--minerthreads',
@@ -508,9 +508,9 @@ class EthereumNode extends EventEmitter {
               '--targetgaslimit',
               '420000000',
               '--networkid',
-              '1151',
+              '51',
               '--ethstats',
-              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+              'XinFin-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000',
               '--mine'
             ]
               : ['--unsafe-transactions'];

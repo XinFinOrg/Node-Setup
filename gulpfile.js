@@ -77,7 +77,6 @@ const tasks = [
   'transpile-modules',
   'copy-build-folder-files',
   'switch-production',
-  'build-interface',
   'copy-interface',
   'move-wallet',
   'copy-i18n',
