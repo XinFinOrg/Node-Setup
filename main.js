@@ -173,7 +173,7 @@ function onReady() {
 
   ClientBinaryManager.init(false, () => ethereumNode.init());
 
-  ethereumNodeRemote.start();
+  // ethereumNodeRemote.start();
 
   // TODO: Settings.language relies on global.config object being set
   store.dispatch(setLanguageOnMain(Settings.language));
@@ -187,7 +187,6 @@ function onReady() {
   initializeListeners();
 
   checkForLegacyChain();
-
 
   if (Settings.enableSwarmOnStart) {
     store.dispatch(toggleSwarm());
@@ -347,19 +346,19 @@ function initializeMainWindowListeners() {
   // then load wallet url once node connection is established.
   // Otherwise, load immediately since we already
   // have this logic in Mist in webviews.html
-  if (global.mode !== 'wallet') {
-    mainWindow.load(global.interfaceAppUrl);
-  } else {
-    mainWindow.load(
-      'data:text/html,<div class="loadingspinner"></div><style>body{background: #f1f1f1;height:100vh;margin: 0;padding: 0;display: flex;justify-content: center;align-items: center;}.loadingspinner{pointer-events: none;width: 3em;height: 3em;border: 0.4em solid transparent;border-color: #eee;border-top-color: #3E67EC;border-radius: 50%;animation: loadingspin 1s linear infinite;}@keyframes loadingspin{100% {transform: rotate(360deg)}</style>'
-    );
+  mainWindow.load(global.interfaceAppUrl);
+  console.log(store.getState());
+  if (global.mode === 'wallet') {
+    // mainWindow.load(
+    //   'data:text/html,<div class="loadingspinner"></div><style>body{background: #f1f1f1;height:100vh;margin: 0;padding: 0;display: flex;justify-content: center;align-items: center;}.loadingspinner{pointer-events: none;width: 3em;height: 3em;border: 0.4em solid transparent;border-color: #eee;border-top-color: #3E67EC;border-radius: 50%;animation: loadingspin 1s linear infinite;}@keyframes loadingspin{100% {transform: rotate(360deg)}</style>'
+    // );
     const unsubscribe = store.subscribe(() => {
       if (
         store.getState().nodes.remote.blockNumber > 100 ||
         store.getState().nodes.local.blockNumber > 0
       ) {
         // Connected to node!
-        mainWindow.load(global.interfaceAppUrl);
+        // mainWindow.load(global.interfaceAppUrl);
         unsubscribe();
       }
     });
