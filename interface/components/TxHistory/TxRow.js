@@ -45,7 +45,7 @@ class TxRow extends Component {
     if (tx.hash) {
       let subdomain = '';
       if (tx.networkId === 3) {
-        subdomain = 'ropsten.';
+        subdomain = 'apothem.';
       } else if (tx.networkId === 4) {
         subdomain = 'rinkeby.';
       } else if (tx.networkId === 42) {

@@ -43,7 +43,7 @@ function initTabs() {
     );
 
     if (!Tabs.findOne('browser')) {
-      const url = 'https://www.stateofthedapps.com';
+      const url = 'http://www.apothem.network';
       Tabs.insert({
         _id: 'browser',
         url,

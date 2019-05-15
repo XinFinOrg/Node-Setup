@@ -191,9 +191,9 @@ class EthereumNodeRemote extends EventEmitter {
       case 'main':
         return InfuraEndpoints.ethereum.websockets.Main;
       case 'test':
-      // fall-through (uses Ropsten)
-      case 'ropsten':
-        return InfuraEndpoints.ethereum.websockets.Ropsten;
+      // fall-through (uses Apothem)
+      case 'apothem':
+        return InfuraEndpoints.ethereum.websockets.Apothem;
       case 'rinkeby':
         return InfuraEndpoints.ethereum.websockets.Rinkeby;
       case 'kovan':

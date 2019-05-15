@@ -2,13 +2,13 @@ export const InfuraEndpoints = {
   ethereum: {
     http: {
       Main: 'https://testnet.xinfin.network',
-      Ropsten: 'https://ropsten.infura.io/mist',
+      ropsten: 'https://ropsten.infura.io/mist',
       Rinkeby: 'https://rinkeby.infura.io/mist',
       Kovan: 'https://kovan.infura.io/mist'
     },
     websockets: {
       Main: 'ws://62.233.65.7:8555',
-      Ropsten: 'wss://ropsten.infura.io/ws/mist',
+      ropsten: 'wss://ropsten.infura.io/ws/mist',
       Rinkeby: 'wss://rinkeby.infura.io/ws/mist',
       Kovan: 'wss://kovan.infura.io/ws/mist'
     }

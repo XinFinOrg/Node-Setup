@@ -21,7 +21,7 @@ import { settings } from 'cluster';
 const ethereumNodeLog = logger.create('EthereumNode');
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'ropsten';
+const DEFAULT_NETWORK = 'apothem';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
@@ -101,7 +101,7 @@ class EthereumNode extends EventEmitter {
   }
 
   get isTestNetwork() {
-    return this.network === 'test' || this.network === 'ropsten';
+    return this.network === 'test' || this.network === 'apothem';
   }
 
   get isRinkebyNetwork() {
@@ -301,7 +301,7 @@ class EthereumNode extends EventEmitter {
   _start(nodeType, network, syncMode) {
     ethereumNodeLog.info(`Start node: ${nodeType} ${network} ${syncMode}`);
 
-    if (network === 'test' || network === 'ropsten') {
+    if (network === 'test' || network === 'apothem') {
       ethereumNodeLog.debug('Node will connect to the test network');
     }
 
@@ -446,19 +446,19 @@ class EthereumNode extends EventEmitter {
       let args;
 
       switch (network) {
-        // Starts Ropsten network
-        case 'ropsten':
+        // Starts Apothem network
+        case 'apothem':
         // fall through
         case 'test':
           args = [
             '--bootnodes',
-            'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@109.169.40.129:30301,enode://ad442331848f2aaff489cf6ca1ccced5a33379f065e5efbd4a6980f9efeccecb48aba7ec8d3f80c77fa502858bc200cc8109f7bf2ce00ef22a0e8ee94a55d91e@109.169.40.128:30303,enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@5.152.223.199:30303,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@62.233.65.7:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301',
+            'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@5.152.223.197:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
             '--ws',
             '--ethstats',
-            'XinFin-Test-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+            'XinFin-Test-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000',
             '--rpc',
             '--networkid',
-            '1151'
+            '51'
           ];
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
@@ -500,7 +500,7 @@ class EthereumNode extends EventEmitter {
             nodeType === 'XDC'
             ? [
               '--bootnodes',
-              'enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@109.169.40.129:30301,enode://ad442331848f2aaff489cf6ca1ccced5a33379f065e5efbd4a6980f9efeccecb48aba7ec8d3f80c77fa502858bc200cc8109f7bf2ce00ef22a0e8ee94a55d91e@109.169.40.128:30303,enode://ec569f5d52cefee5c5405a0c5db720dc7061f3085e0682dd8321413430ddda6a177b85db75b0daf83d2e68760ba3f5beb4ba9e333e7d52072fba4d39b05a0451@5.152.223.199:30303,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@62.233.65.7:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301',
+              'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
               '--ws',
               '--rpc',
               '--minerthreads',
@@ -508,9 +508,9 @@ class EthereumNode extends EventEmitter {
               '--targetgaslimit',
               '420000000',
               '--networkid',
-              '1151',
+              '51',
               '--ethstats',
-              'XinFin-Network-One-Click:xinfin_test_network_stats@stats_testnet.xinfin.network:3000',
+              'XinFin-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000',
               '--mine'
             ]
               : ['--unsafe-transactions'];
@@ -738,7 +738,7 @@ class EthereumNode extends EventEmitter {
       case '0x6341fd3daf94b748c72ced5a5b26028f2474f5f00d824504e4fa37a75767e177':
         return 'rinkeby';
       case '0x41941023680923e0fe4d74a34bdac8141f2540e3ae90623718e47d66d1ca4a2d':
-        return 'ropsten';
+        return 'apothem';
       case '0xa3c565fc15c7478862d50ccd6561e3c06b24cc509bf388941c25ea985ce32cb9':
         return 'kovan';
       default:
@@ -747,7 +747,7 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'ropsten' ? 'testnet.json' : 'mainnet.json');
+    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'apothem' ? 'testnet.json' : 'mainnet.json');
     ethereumNodeLog.info(genesisPath, ">>>>>>>>>>>")
     // const genesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
     const passwordPath = path.join(Settings.userDataPath, 'password.txt');
