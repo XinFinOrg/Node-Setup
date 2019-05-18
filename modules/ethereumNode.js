@@ -544,7 +544,7 @@ class EthereumNode extends EventEmitter {
       this.initGeth(binPath, network)
         .then(({ account, passwordPath }) => {
           ethereumNodeLog.info(account, '>>>>>>>>');
-          args = args.concat(['--unlock', account, '--password', passwordPath]);
+          args = ['--unlock', account, '--password', passwordPath].concat(args);
           ethereumNodeLog.info(args, '<<<<<<<<<<<<<<<<<<<<<<');
           const proc = spawn(binPath, args);
 
