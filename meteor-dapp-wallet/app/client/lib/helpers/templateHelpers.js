@@ -257,7 +257,7 @@ Formats address to a CaseChecksum
 **/
 Template.registerHelper('toChecksumAddress', function(address) {
   return _.isString(address)
-    ? `xdc${web3.utils.toChecksumAddress(address)}`
+    ? `xdc${web3.utils.toChecksumAddress(address).substring(2)}`
     : '';
 });
 

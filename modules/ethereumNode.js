@@ -456,7 +456,7 @@ class EthereumNode extends EventEmitter {
             'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@5.152.223.197:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
             '--ws',
             '--ethstats',
-            `${os.hostname()}-${os.platform()}-${os.type()}-XinFin-Test-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000`,
+            `${os.hostname()}-${os.type()}-XinFin-Test-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000`,
             '--rpc',
             '--networkid',
             '51'
