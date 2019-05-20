@@ -766,7 +766,7 @@ class EthereumNode extends EventEmitter {
         const data = buffData.toString('utf8');
         let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
         ethereumNodeLog.info(account, "accccccccccccccccccount")
-        if (account.indexOf('xdc') < 0) account = 'xdc'.concat(account) 
+        if (account.indexOf('xdc') < 0) account 
         resolve({account, passwordPath})
       })
       .catch(reject)
