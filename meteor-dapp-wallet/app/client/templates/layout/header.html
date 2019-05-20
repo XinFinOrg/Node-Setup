@@ -7,28 +7,22 @@
                     <span>{{i18n 'wallet.app.buttons.wallet'}}</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{goToSend}}" class="{{isActiveRoute regex='send'}}">
                     <i class="icon-arrow-up"></i>
                     <span>{{i18n 'wallet.app.buttons.send'}}</span>
                 </a>
-            </li>            
+            </li>             -->
             <li class="block-syncing {{#if TemplateVar.get 'syncing'}}syncing{{/if}}">
                 {{#if isWalletMode}}
                     {{#if $eq ($.Session.get "network") "test"}}
                         <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Test-net</span> &nbsp;&nbsp; 
                     {{/if}}
-                    {{#if $eq ($.Session.get "network") "rinkeby"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Rinkeby</span> &nbsp;&nbsp; 
-                    {{/if}}
                     {{#if $eq ($.Session.get "network") "apothem"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Apothem</span> &nbsp;&nbsp; 
-                    {{/if}}
-                    {{#if $eq ($.Session.get "network") "kovan"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Kovan</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Apothem Test Network</span> &nbsp;&nbsp; 
                     {{/if}}
                     {{#if $eq ($.Session.get "network") "private"}}
-                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Private-net</span> &nbsp;&nbsp; 
+                        <span class="private-chain" title="{{i18n 'wallet.app.texts.testnetExplain'}}">Apothem Test Network</span> &nbsp;&nbsp; 
                     {{/if}}
 
                     {{#with TemplateVar.get "syncing"}}
@@ -55,16 +49,16 @@
                     {{/with}}
                 {{/if}}
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{pathFor route='contracts'}}" class="{{isActiveRoute regex='contracts'}}">
                     <i class="icon-docs"></i>
                     <span>{{i18n 'wallet.app.buttons.contracts'}}</span>
                 </a>
-            </li>
-            <li class="wallet-balance">
+            </li> -->
+            <!-- <li class="wallet-balance">
                 <h3>{{i18n 'wallet.app.texts.balance'}}</h3>
                 {{> elements_balance balance=totalBalance changeUnit=true}}
-            </li>
+            </li> -->
 
             </ul>
     </nav>

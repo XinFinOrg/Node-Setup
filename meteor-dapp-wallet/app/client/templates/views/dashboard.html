@@ -25,21 +25,21 @@
                 {{/each}}
             </div>
 
-            {{#unless isBrowserMode}}
+            <!-- {{#unless isBrowserMode}}
                 {{> elements_new_account_button }}
-            {{/unless}}
+            {{/unless}} -->
 
 
-            <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2>
+            <!-- <h2>{{i18n "wallet.accounts.walletsTitle"}}</h2> -->
 
             {{#if hasMinimumBalance}}
-                <p>
+                <!-- <p>
                     {{i18n "wallet.accounts.walletsDescription"}}
-                </p>
+                </p> -->
             {{else}}
-                <p>
+                <!-- <p>
                     {{{i18n "wallet.accounts.walletsDescriptionNotEnoughFunds"}}}
-                </p>
+                </p> -->
             {{/if}}
 
 
@@ -51,12 +51,12 @@
             </div>
 
             {{#if hasMinimumBalance}}
-                <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
+                <!-- <a href="{{pathFor route='createAccount'}}" class="wallet-box create">
                     <div class="account-pattern">
                         +
                     </div>
                     <h3>{{i18n "wallet.app.buttons.addWallet"}}</h3>
-                </a>
+                </a> -->
             {{/if}}
 
         {{else}}
@@ -74,11 +74,6 @@
 
         <div class="dapp-clear-fix"></div>
 
-        {{#if allTransactions}}
-            <h2>{{i18n 'wallet.transactions.latest'}}</h2>
-            {{> elements_transactions_table limit=5}}
-        {{else}}
-            <h2 class="no-txs">{{i18n 'wallet.transactions.none'}}</h2>
-        {{/if}}
+
     </div>
 </template>
