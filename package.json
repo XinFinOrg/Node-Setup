@@ -25,6 +25,7 @@
   },
   "main": "main.js",
   "dependencies": {
+    "babel": "^6.23.0",
     "babel-preset-es2016-node5": "^1.1.2",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
