@@ -7,7 +7,7 @@ export const InfuraEndpoints = {
       Kovan: 'https://kovan.infura.io/mist'
     },
     websockets: {
-      Main: 'wss://ropsten.infura.io/ws/mist',
+      Main: 'ws://62.233.65.7:8555',
       ropsten: 'wss://ropsten.infura.io/ws/mist',
       Rinkeby: 'wss://rinkeby.infura.io/ws/mist',
       Kovan: 'wss://kovan.infura.io/ws/mist'

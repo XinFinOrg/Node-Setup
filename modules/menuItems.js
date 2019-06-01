@@ -559,51 +559,51 @@ let menuTempl = function(webviews) {
   }
 
   // add network switch
-  devToolsMenu.push({
-    label: i18n.t('mist.applicationMenu.develop.network'),
-    submenu: [
-      {
-        label: i18n.t('mist.applicationMenu.develop.mainNetwork'),
-        accelerator: 'CommandOrControl+Alt+1',
-        checked: store.getState().nodes.network === 'main',
-        enabled: store.getState().nodes.network !== 'private',
-        type: 'checkbox',
-        click() {
-          changeNodeNetwork('main', webviews);
-        }
-      },
-      {
-        label: 'XinFin - Test network',
-        accelerator: 'CommandOrControl+Alt+2',
-        checked: store.getState().nodes.network === 'apothem',
-        enabled: store.getState().nodes.network !== 'private',
-        type: 'checkbox',
-        click() {
-          changeNodeNetwork('apothem', webviews);
-        }
-      }
-      // {
-      //   label: 'Rinkeby - Test network',
-      //   accelerator: 'CommandOrControl+Alt+3',
-      //   checked: store.getState().nodes.network === 'rinkeby',
-      //   enabled: store.getState().nodes.network !== 'private',
-      //   type: 'checkbox',
-      //   click() {
-      //     changeNodeNetwork('rinkeby', webviews);
-      //   }
-      // }
-      // {
-      //   label: 'Solo network',
-      //   accelerator: 'CommandOrControl+Alt+4',
-      //   checked: ethereumNode.isOwnNode && ethereumNode.isDevNetwork,
-      //   enabled: ethereumNode.isOwnNode,
-      //   type: 'checkbox',
-      //   click() {
-      //     restartNode(ethereumNode.type, 'dev');
-      //   }
-      // }
-    ]
-  });
+  // devToolsMenu.push({
+  //   label: i18n.t('mist.applicationMenu.develop.network'),
+  //   submenu: [
+  //     // {
+  //     //   label: i18n.t('mist.applicationMenu.develop.mainNetwork'),
+  //     //   accelerator: 'CommandOrControl+Alt+1',
+  //     //   checked: store.getState().nodes.network === 'main',
+  //     //   enabled: store.getState().nodes.network !== 'private',
+  //     //   type: 'checkbox',
+  //     //   click() {
+  //     //     changeNodeNetwork('main', webviews);
+  //     //   }
+  //     // },
+  //     // {
+  //     //   label: 'XinFin - Test network',
+  //     //   accelerator: 'CommandOrControl+Alt+2',
+  //     //   checked: store.getState().nodes.network === 'apothem',
+  //     //   enabled: store.getState().nodes.network !== 'private',
+  //     //   type: 'checkbox',
+  //     //   click() {
+  //     //     changeNodeNetwork('apothem', webviews);
+  //     //   }
+  //     // }
+  //     // {
+  //     //   label: 'Rinkeby - Test network',
+  //     //   accelerator: 'CommandOrControl+Alt+3',
+  //     //   checked: store.getState().nodes.network === 'rinkeby',
+  //     //   enabled: store.getState().nodes.network !== 'private',
+  //     //   type: 'checkbox',
+  //     //   click() {
+  //     //     changeNodeNetwork('rinkeby', webviews);
+  //     //   }
+  //     // }
+  //     // {
+  //     //   label: 'Solo network',
+  //     //   accelerator: 'CommandOrControl+Alt+4',
+  //     //   checked: ethereumNode.isOwnNode && ethereumNode.isDevNetwork,
+  //     //   enabled: ethereumNode.isOwnNode,
+  //     //   type: 'checkbox',
+  //     //   click() {
+  //     //     restartNode(ethereumNode.type, 'dev');
+  //     //   }
+  //     // }
+  //   ]
+  // });
 
   // add sync mode switch
   devToolsMenu.push({

@@ -3,7 +3,7 @@
     "name": "standard-minifier-js",
     "version": "2.3.2"
   },
-  "totalMinifiedBytes": 2927115,
+  "totalMinifiedBytes": 2927103,
   "totalMinifiedGzipBytes": 743697,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 8962,
@@ -1066,7 +1066,7 @@
     "app/client/templates/elements/template.tokenBox.js": 1408,
     "app/client/templates/elements/template.transactionTable.js": 11618,
     "app/client/templates/elements/template.vulnerabilities.js": 2283,
-    "app/client/templates/layout/template.header.js": 7090,
+    "app/client/templates/layout/template.header.js": 7078,
     "app/client/templates/layout/template.notFound.js": 248,
     "app/client/templates/views/template.account.js": 15960,
     "app/client/templates/views/template.account_create.js": 7353,
