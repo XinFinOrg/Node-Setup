@@ -22,7 +22,7 @@ const ethereumNodeLog = logger.create('EthereumNode');
 import os from 'os';
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'apothem';
+const DEFAULT_NETWORK = 'main';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
@@ -505,7 +505,7 @@ class EthereumNode extends EventEmitter {
             nodeType === 'XDC'
               ? [
                   '--bootnodes',
-                  'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
+                  'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@78.129.229.96:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@5.152.223.199:30301',
                   '--ws',
                   '--rpc',
                   '--minerthreads',
@@ -513,9 +513,9 @@ class EthereumNode extends EventEmitter {
                   '--targetgaslimit',
                   '420000000',
                   '--networkid',
-                  '51',
+                  '50',
                   '--ethstats',
-                  `${os.hostname()}-${os.platform()}-${os.type()}-XinFin-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000`,
+                  `${os.hostname()}-${os.type()}-XinFin-Network-One-Click:xinfin_xdpos_hybrid_network_stats@stats.xinfin.network:3000`,
                   '--mine'
                 ]
               : ['--unsafe-transactions'];
