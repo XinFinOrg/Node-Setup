@@ -38,12 +38,12 @@
                         <span>{{toChecksumAddress address}}</span>
                     </h2>
                     <div class="clear"></div>
-                    {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}}
+                    <!-- {{> elements_balance balance=balance changeUnit=true showAllDecimals=true}} -->
                 </header>
 
 
                 {{#with tokens}}
-                    <table class="token-list dapp-zebra">
+                    <!-- <table class="token-list dapp-zebra">
                         <tbody>
                             {{#each this}}
                                 <tr>
@@ -59,7 +59,7 @@
                                 </tr>
                             {{/each}}
                         </tbody>
-                    </table>
+                    </table> -->
                 {{/with}}
 
                 {{#with isVulnerable}}
@@ -120,12 +120,12 @@
             <aside class="dapp-actionbar">
                 <nav>
                     <ul>
-                        <li>
+                        <!-- <li>
                             <a href="{{pathFor route='sendTo' address=(toChecksumAddress address)}}" title="{{toChecksumAddress address}}">
                                 <i class="icon-arrow-down"></i>
                                 {{i18n "wallet.accounts.buttons.deposit"}}
                             </a>
-                        </li>
+                        </li> -->
 
                         {{#if $eq ($.Session.get "network") "main"}}
 

@@ -1,7 +1,7 @@
 const _ = require('./utils/underscore.js');
 const fs = require('fs');
 const Q = require('bluebird');
-const { spawn, exec} = require('child_process');
+const { spawn, exec } = require('child_process');
 const { dialog } = require('electron');
 const Windows = require('./windows.js');
 const logRotate = require('log-rotate');
@@ -19,9 +19,10 @@ import {
 import logger from './utils/logger';
 import { settings } from 'cluster';
 const ethereumNodeLog = logger.create('EthereumNode');
+import os from 'os';
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'apothem';
+const DEFAULT_NETWORK = 'main';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
@@ -455,7 +456,7 @@ class EthereumNode extends EventEmitter {
             'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@5.152.223.197:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
             '--ws',
             '--ethstats',
-            'XinFin-Test-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000',
+            `${os.hostname()}-${os.type()}-XinFin-Test-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000`,
             '--rpc',
             '--networkid',
             '51'
@@ -463,7 +464,11 @@ class EthereumNode extends EventEmitter {
           if (syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
           } else {
-            args.push('--syncmode', syncMode,process.arch === 'x64' ? '1024' : '512');
+            args.push(
+              '--syncmode',
+              syncMode,
+              process.arch === 'x64' ? '1024' : '512'
+            );
           }
           break;
 
@@ -498,28 +503,32 @@ class EthereumNode extends EventEmitter {
         default:
           args =
             nodeType === 'XDC'
-            ? [
-              '--bootnodes',
-              'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@127.0.0.1:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@188.227.164.51:30301',
-              '--ws',
-              '--rpc',
-              '--minerthreads',
-              '1',
-              '--targetgaslimit',
-              '420000000',
-              '--networkid',
-              '51',
-              '--ethstats',
-              'XinFin-Network-One-Click:xinfin_apothem_network_stats@stats.apothem.network:4000',
-              '--mine'
-            ]
+              ? [
+                  '--bootnodes',
+                  'enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@78.129.229.96:30301,enode://1c20e6b46ce608c1fe739e78611225b94e663535b74a1545b1667eac8ff75ed43216306d123306c10e043f228e42cc53cb2728655019292380313393eaaf6e23@5.152.223.199:30301',
+                  '--ws',
+                  '--rpc',
+                  '--minerthreads',
+                  '1',
+                  '--targetgaslimit',
+                  '420000000',
+                  '--networkid',
+                  '50',
+                  '--ethstats',
+                  `${os.hostname()}-${os.type()}-XinFin-Network-One-Click:xinfin_xdpos_hybrid_network_stats@stats.xinfin.network:3000`,
+                  '--mine'
+                ]
               : ['--unsafe-transactions'];
           if (nodeType === 'XDC' && syncMode === 'nosync') {
             args.push('--nodiscover', '--maxpeers=0');
           } else {
-            args.push('--syncmode', syncMode,process.arch === 'x64' ? '1024' : '512');
+            args.push(
+              '--syncmode',
+              syncMode,
+              process.arch === 'x64' ? '1024' : '512'
+            );
           }
-          ethereumNodeLog.info(`Args ${args}`)
+          ethereumNodeLog.info(`Args ${args}`);
       }
 
       const nodeOptions = Settings.nodeOptions;
@@ -531,56 +540,58 @@ class EthereumNode extends EventEmitter {
       }
 
       ethereumNodeLog.trace('Spawn', binPath, args);
-      
-      this.initGeth(binPath, network).then(({account, passwordPath})  => {
-          ethereumNodeLog.info( account, ">>>>>>>>")
-          args = args.concat(['--unlock', account, '--password', passwordPath])
-          ethereumNodeLog.info(args, "<<<<<<<<<<<<<<<<<<<<<<")
+
+      this.initGeth(binPath, network)
+        .then(({ account, passwordPath }) => {
+          ethereumNodeLog.info(account, '>>>>>>>>');
+          args = ['--unlock', account, '--password', passwordPath].concat(args);
+          ethereumNodeLog.info(args, '<<<<<<<<<<<<<<<<<<<<<<');
           const proc = spawn(binPath, args);
-          
+
           proc.once('error', error => {
             if (this.state === STATES.STARTING) {
               this.state = STATES.ERROR;
-              
+
               ethereumNodeLog.info('Node startup error');
-              
+
               // TODO: detect this properly
               // this.emit('nodeBinaryNotFound');
-              
+
               reject(error);
             }
           });
-          
+
           proc.stdout.on('data', data => {
             ethereumNodeLog.trace('Got stdout data', data.toString());
             this.emit('data', data);
           });
-          
+
           proc.stderr.on('data', data => {
             ethereumNodeLog.trace('Got stderr data', data.toString());
             ethereumNodeLog.info(data.toString()); // TODO: This should be ethereumNodeLog.error(), but not sure why regular stdout data is coming in through stderror
             this.emit('data', data);
           });
-      
-        // when data is first received
+
+          // when data is first received
           this.once('data', () => {
             /*
             We wait a short while before marking startup as successful
             because we may want to parse the initial node output for
             errors, etc (see XDC port-binding error above)
             */
-          setTimeout(() => {
-            if (STATES.STARTING === this.state) {
-              ethereumNodeLog.info(
-                `${NODE_START_WAIT_MS}ms elapsed, assuming node started up successfully`
+            setTimeout(() => {
+              if (STATES.STARTING === this.state) {
+                ethereumNodeLog.info(
+                  `${NODE_START_WAIT_MS}ms elapsed, assuming node started up successfully`
                 );
                 resolve(proc);
-                }
-              }, NODE_START_WAIT_MS);
-            });
-          }).catch(console.warn)
-      })
-    }
+              }
+            }, NODE_START_WAIT_MS);
+          });
+        })
+        .catch(console.warn);
+    });
+  }
 
   _showNodeErrorDialog(nodeType, network) {
     let log = path.join(Settings.userDataPath, 'logs', 'all.log');
@@ -747,79 +758,90 @@ class EthereumNode extends EventEmitter {
   }
 
   async initGeth(binPath, network) {
-    const genesisPath = path.join(Settings.userDataPath, network === 'test' || network === 'apothem' ? 'testnet.json' : 'mainnet.json');
-    ethereumNodeLog.info(genesisPath, ">>>>>>>>>>>")
+    console.log(os.hostname(), 'hostname');
+    const genesisPath = path.join(
+      Settings.userDataPath,
+      network === 'test' || network === 'apothem'
+        ? 'testnet.json'
+        : 'mainnet.json'
+    );
+    ethereumNodeLog.info(genesisPath, '>>>>>>>>>>>');
     // const genesisPath = `${binPath.substring(0, binPath.length - 3)}genesis.json`;
     const passwordPath = path.join(Settings.userDataPath, 'password.txt');
     return new Promise((resolve, reject) => {
       this.asyncSpawn(binPath, ['init', genesisPath])
-      .then(code => {
-        ethereumNodeLog.info(code, "Return code")
-        return this.asyncSpawn(binPath, ['account', 'list'])
-      }) 
-      .then(list => {
-        ethereumNodeLog.info(list, ">>>>>>>>>>>>>>>>>>list");
-        if (list) return list
-        else return this.asyncSpawn(binPath, ['account', 'new', '--password', passwordPath])
-      })    
-      .then(buffData => {
-        const data = buffData.toString('utf8');
-        let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'))
-        ethereumNodeLog.info(account, "accccccccccccccccccount")
-        if (account.indexOf('xdc') < 0) account 
-        resolve({account, passwordPath})
-      })
-      .catch(reject)
-    })
+        .then(code => {
+          ethereumNodeLog.info(code, 'Return code');
+          return this.asyncSpawn(binPath, ['account', 'list']);
+        })
+        .then(list => {
+          ethereumNodeLog.info(list, '>>>>>>>>>>>>>>>>>>list');
+          if (list) return list;
+          else
+            return this.asyncSpawn(binPath, [
+              'account',
+              'new',
+              '--password',
+              passwordPath
+            ]);
+        })
+        .then(buffData => {
+          const data = buffData.toString('utf8');
+          let account = data.slice(data.indexOf('{') + 1, data.indexOf('}'));
+          ethereumNodeLog.info(account, 'accccccccccccccccccount');
+          if (account.indexOf('xdc') < 0)
+          resolve({ account, passwordPath });
+        })
+        .catch(reject);
+    });
   }
 
   async asyncSpawn(binPath, args) {
     return new Promise((resolve, reject) => {
-      const child = spawn(binPath, args )
+      const child = spawn(binPath, args);
 
-      ethereumNodeLog.info(binPath, args, 'args')
+      ethereumNodeLog.info(binPath, args, 'args');
       child.once('error', error => {
-        ethereumNodeLog.info(error, "errrrrrrrrrrrrrrrr")
+        ethereumNodeLog.info(error, 'errrrrrrrrrrrrrrrr');
         reject(error);
       });
-      
+
       child.stdout.on('data', data => {
-        ethereumNodeLog.info(data, args, "stdout")
-        resolve(data)
+        ethereumNodeLog.info(data, args, 'stdout');
+        resolve(data);
       });
-      
+
       child.on('close', code => {
         // ethereumNodeLog.info("done")
-        resolve(code)
-      })
+        resolve(code);
+      });
       // child.stderr.on('data', data => {
       //   ethereumNodeLog.info(data, "console log")
       //   // resolve(data)
       // });
-    })
+    });
   }
 
   async asyncExec(args) {
     return new Promise((resolve, reject) => {
-      ethereumNodeLog.info("\n\n", args, "argssssssss")
-      const child = exec(args)
+      ethereumNodeLog.info('\n\n', args, 'argssssssss');
+      const child = exec(args);
       child.once('error', error => {
-        ethereumNodeLog.info(error, "errrrrrrrrrrrrrrrr")
+        ethereumNodeLog.info(error, 'errrrrrrrrrrrrrrrr');
         reject(error);
       });
       child.stdout.on('data', data => {
-        ethereumNodeLog.info(data, args, ">>>>>>>>>>>")
-        resolve(data)
+        ethereumNodeLog.info(data, args, '>>>>>>>>>>>');
+        resolve(data);
       });
       child.on('close', code => {
-        ethereumNodeLog.info("done")
-        resolve(code)
-      })
-    })
+        ethereumNodeLog.info('done');
+        resolve(code);
+      });
+    });
   }
 }
 
 EthereumNode.STARTING = 0;
 
 module.exports = new EthereumNode();
-
