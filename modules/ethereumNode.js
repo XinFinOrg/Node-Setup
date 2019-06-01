@@ -515,7 +515,7 @@ class EthereumNode extends EventEmitter {
                   '--networkid',
                   '50',
                   '--ethstats',
-                  `${os.hostname()}-${os.type()}-XinFin-Network-One-Click:xinfin_xdpos_hybrid_network_stats@stats.xinfin.network:3000`,
+                  `${os.hostname()}-${os.type()}-XinFin-MainNet-One-Click:xinfin_xdpos_hybrid_network_stats@stats.xinfin.network:3000`,
                   '--mine'
                 ]
               : ['--unsafe-transactions'];
