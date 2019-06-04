@@ -37,9 +37,9 @@
         "testnetExplain":
           "You are on a testnet, DO NOT SEND any real ether to these addresses",
         "noAccounts": {
-          "title": "You have no accounts yet",
+          "title": "CONFIGURATION WILL TAKE FEW MINS TO CONNECT XINFIN NETWORK",
           "text":
-            "You need to create at least one account with a strong password."
+            ""
         }
       },
       "error": {

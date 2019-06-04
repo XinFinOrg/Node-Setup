@@ -42,9 +42,9 @@
         "testnetExplain":
           "You are on a testnet, DO NOT SEND any real XDC to these addresses",
         "noAccounts": {
-          "title": "You have no accounts yet",
+          "title": "Configuration will take few mins to connect XinFin Network",
           "text":
-            "You need to create at least one account with a strong password."
+            ""
         }
       },
       "error": {
