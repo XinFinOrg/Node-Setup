@@ -29,11 +29,11 @@ class About extends React.Component {
             License {window.mist.license}
             <br />
             GitHub{' '}
-            <a href="https://github.com/ethereum/mist" target="_blank">
-              github.com/ethereum/mist
+            <a href="https://github.com/xinfinorg/Node-Setup" target="_blank">
+            github.com/xinfinorg/Node-Setup
             </a>
           </p>
-          <small>Copyright 2018 Ethereum Foundation</small>
+          <small>Copyright 2019 XinFin</small>
         </div>
       </div>
     );

@@ -85,8 +85,12 @@
       "help": {
         "label": "Help",
         "mistWiki": "Troubleshooting and Help",
-        "gitter": "Mist channel on Gitter",
-        "reportBug": "Report an issue on Github"
+        "gitter": "XinFin channel on Gitter",
+        "reportBug": "Report an issue on Github",
+        "HowToHelp":"Require Help ?",
+        "myContract":"mycontract, Create your Smart Contract without Coding",
+        "wallet":"Require new Account?",
+        "mobilewallet": "XinFin Mobile Wallet"
       }
     },
     "errors": {

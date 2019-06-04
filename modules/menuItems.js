@@ -753,21 +753,45 @@ let menuTempl = function(webviews) {
   }
   helpMenu.push(
     {
+      label: i18n.t('mist.applicationMenu.help.wallet'),
+      click() {
+        shell.openExternal('https://xinfin.network');
+      }
+    },
+    {
+      label: i18n.t('mist.applicationMenu.help.mobilewallet'),
+      click() {
+        shell.openExternal('https://play.google.com/store/apps/details?id=com.xdcwallet');
+      }
+    },
+    {
+      label: i18n.t('mist.applicationMenu.help.myContract'),
+      click() {
+        shell.openExternal('https://mycontract.co');
+      }
+    },
+    {
       label: i18n.t('mist.applicationMenu.help.mistWiki'),
       click() {
-        shell.openExternal('https://github.com/ethereum/mist/wiki');
+        shell.openExternal('https://github.com/XinFinOrg/Node-Setup/wiki');
       }
     },
     {
       label: i18n.t('mist.applicationMenu.help.gitter'),
       click() {
-        shell.openExternal('https://gitter.im/ethereum/mist');
+        shell.openExternal('https://gitter.im/xinfin-public');
       }
     },
     {
       label: i18n.t('mist.applicationMenu.help.reportBug'),
       click() {
-        shell.openExternal('https://github.com/ethereum/mist/issues');
+        shell.openExternal('https://github.com/XinFinOrg/Node-Setup/issues');
+      }
+    },
+    {
+      label: i18n.t('mist.applicationMenu.help.HowToHelp'),
+      click() {
+        shell.openExternal('https://howto.xinfin.org/');
       }
     }
   );
