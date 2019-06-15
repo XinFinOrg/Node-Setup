@@ -45,7 +45,7 @@
         "logFiles": "Show log file",
         "ethereumNode": "XinFin Node",
         "network": "Network",
-        "mainNetwork": " XinFin Main Network",
+        "mainNetwork": "XinFin Main Network",
         "startMining": "⛏ Start Mining",
         "stopMining": "⛏ Stop Mining",
         "openRemix": "Open Remix IDE"

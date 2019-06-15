@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.2"
   },
-  "totalMinifiedBytes": 2927054,
-  "totalMinifiedGzipBytes": 743692,
+  "totalMinifiedBytes": 2927074,
+  "totalMinifiedGzipBytes": 743700,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 8962,
     "packages/standard-minifiers.js": 38,
@@ -14,7 +14,7 @@
     "packages/ecmascript.js": 30,
     "packages/modules-runtime.js": 4023,
     "packages/modules.js": [
-      109293,
+      109313,
       {
         "node_modules": {
           "meteor": {
@@ -40,7 +40,7 @@
           },
           "@babel": {
             "runtime": {
-              "package.json": 1219,
+              "package.json": 1239,
               "helpers": {
                 "typeof.js": 500,
                 "toConsumableArray.js": 148,

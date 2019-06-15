@@ -25,7 +25,7 @@ const check = (exports.check = () => {
       break;
   }
 
-  return got('https://api.github.com/repos/ethereum/mist/releases/latest', {
+  return got('https://api.github.com/repos/XinFinOrg/Node-Setup/releases/latest', {
     timeout: 30000,
     json: true
   })

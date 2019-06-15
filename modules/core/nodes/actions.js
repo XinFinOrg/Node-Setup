@@ -5,15 +5,15 @@ export function changeNetwork(network) {
   return dispatch => {
     dispatch({ type: '[MAIN]:NODES:CHANGE_NETWORK_START' });
 
-    try {
-      ethereumNodeRemote.setNetwork(network);
-      dispatch({
-        type: '[MAIN]:NODES:CHANGE_NETWORK_SUCCESS',
-        payload: { network }
-      });
-    } catch (e) {
-      dispatch({ type: '[MAIN]:NODES:CHANGE_NETWORK_FAILURE', error: e });
-    }
+    // try {
+    //   ethereumNodeRemote.setNetwork(network);
+    //   dispatch({
+    //     type: '[MAIN]:NODES:CHANGE_NETWORK_SUCCESS',
+    //     payload: { network }
+    //   });
+    // } catch (e) {
+    //   dispatch({ type: '[MAIN]:NODES:CHANGE_NETWORK_FAILURE', error: e });
+    // }
   };
 }
 

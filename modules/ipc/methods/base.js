@@ -83,99 +83,105 @@ module.exports = class BaseProcessor {
   }
 
   async _sendPayload(payload, conn) {
-    if (this._shouldSendToRemote(payload, conn)) {
-      this._log.trace(`Sending request to remote node: ${payload.method}`);
-      const result = await this._sendToRemote(payload);
-      this._log.trace(
-        `Result from remote node: ${payload.method} (id: ${payload.id})`
-      );
-      return result;
-    } else {
-      this._log.trace(`Sending request to local node: ${payload.method}`);
-      const result = await conn.socket.send(payload, { fullResult: true });
-      this._log.trace(
-        `Result from local node: ${payload.method} (id: ${payload.id})`
-      );
-      return result.result;
-    }
+    // if (this._shouldSendToRemote(payload, conn)) {
+    //   this._log.trace(`Sending request to remote node: ${payload.method}`);
+    //   const result = await this._sendToRemote(payload);
+    //   this._log.trace(
+    //     `Result from remote node: ${payload.method} (id: ${payload.id})`
+    //   );
+    //   return result;
+    // } else {
+    //   this._log.trace(`Sending request to local node: ${payload.method}`);
+    //   const result = await conn.socket.send(payload, { fullResult: true });
+    //   this._log.trace(
+    //     `Result from local node: ${payload.method} (id: ${payload.id})`
+    //   );
+    //   return result.result;
+    // }
+    this._log.trace(`Sending request to local node: ${payload.method}`);
+    const result = await conn.socket.send(payload, { fullResult: true });
+    this._log.trace(
+      `Result from local node: ${payload.method} (id: ${payload.id})`
+    );
+    return result.result;
   }
 
-  _shouldSendToRemote(payload, conn) {
-    // Do NOT send to the remote node if: (all conditions must be satisfied)
-    // 1. the local node is synced
-    const isRemote = store.getState().nodes.active === 'remote';
-    if (!isRemote) {
-      return false;
-    }
+  // _shouldSendToRemote(payload, conn) {
+  //   // Do NOT send to the remote node if: (all conditions must be satisfied)
+  //   // 1. the local node is synced
+  //   const isRemote = store.getState().nodes.active === 'remote';
+  //   if (!isRemote) {
+  //     return false;
+  //   }
 
-    // 2. method is on the ignore list
-    const method = payload.method;
-    if (this.remoteIgnoreMethods.includes(method)) {
-      return false;
-    }
+  //   // 2. method is on the ignore list
+  //   const method = payload.method;
+  //   if (this.remoteIgnoreMethods.includes(method)) {
+  //     return false;
+  //   }
 
-    // 3. the method is
-    // net_peerCount | eth_syncing | eth_subscribe[syncing]
-    // and is originating from the mist interface
-    // dev: localhost:3000, production: app.asar/interface/index.html
-    if (
-      conn &&
-      conn.owner &&
-      conn.owner.history &&
-      (conn.owner.history[0].startsWith('http://localhost:3000') ||
-        conn.owner.history[0].indexOf('app.asar/interface/index.html') > -1)
-    ) {
-      if (
-        method === 'net_peerCount' ||
-        method === 'eth_syncing' ||
-        (method === 'eth_subscribe' && payload.params[0] === 'syncing')
-      ) {
-        return false;
-      }
-    }
+  //   // 3. the method is
+  //   // net_peerCount | eth_syncing | eth_subscribe[syncing]
+  //   // and is originating from the mist interface
+  //   // dev: localhost:3000, production: app.asar/interface/index.html
+  //   if (
+  //     conn &&
+  //     conn.owner &&
+  //     conn.owner.history &&
+  //     (conn.owner.history[0].startsWith('http://localhost:3000') ||
+  //       conn.owner.history[0].indexOf('app.asar/interface/index.html') > -1)
+  //   ) {
+  //     if (
+  //       method === 'net_peerCount' ||
+  //       method === 'eth_syncing' ||
+  //       (method === 'eth_subscribe' && payload.params[0] === 'syncing')
+  //     ) {
+  //       return false;
+  //     }
+  //   }
 
-    return true;
-  }
+  //   return true;
+  // }
 
-  _sendToRemote(payload, retry = false) {
-    return new Promise(async (resolve, reject) => {
-      const requestId = await ethereumNodeRemote.send(
-        payload.method,
-        payload.params
-      );
+  // _sendToRemote(payload, retry = false) {
+  //   return new Promise(async (resolve, reject) => {
+  //     const requestId = await ethereumNodeRemote.send(
+  //       payload.method,
+  //       payload.params
+  //     );
 
-      if (!requestId) {
-        const errorMessage = `No request id for method ${payload.method} (${
-          payload.params
-        })`;
-        reject(errorMessage);
-        this._log.error(errorMessage);
-        return;
-      }
+  //     if (!requestId) {
+  //       const errorMessage = `No request id for method ${payload.method} (${
+  //         payload.params
+  //       })`;
+  //       reject(errorMessage);
+  //       this._log.error(errorMessage);
+  //       return;
+  //     }
 
-      const callback = data => {
-        if (!data) {
-          return;
-        }
+  //     const callback = data => {
+  //       if (!data) {
+  //         return;
+  //       }
 
-        try {
-          data = JSON.parse(data);
-        } catch (error) {
-          const errorMessage = `Error parsing data: ${data}`;
-          this._log.trace(errorMessage);
-          reject(errorMessage);
-        }
+  //       try {
+  //         data = JSON.parse(data);
+  //       } catch (error) {
+  //         const errorMessage = `Error parsing data: ${data}`;
+  //         this._log.trace(errorMessage);
+  //         reject(errorMessage);
+  //       }
 
-        if (data.id === requestId) {
-          resolve(data);
-          // TODO: remove listener
-          // ethereumNodeRemote.ws.removeListener('message', callback);
-        }
-      };
+  //       if (data.id === requestId) {
+  //         resolve(data);
+  //         // TODO: remove listener
+  //         // ethereumNodeRemote.ws.removeListener('message', callback);
+  //       }
+  //     };
 
-      ethereumNodeRemote.ws.on('message', callback);
-    });
-  }
+  //     // ethereumNodeRemote.ws.on('message', callback);
+  //   });
+  // }
 
   _isAdminConnection(conn) {
     // main window or popupwindows - always allow requests

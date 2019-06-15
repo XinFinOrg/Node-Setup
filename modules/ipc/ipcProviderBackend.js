@@ -247,9 +247,9 @@ class IpcProviderBackend {
         log.info('Ethereum node stopping, disconnecting sockets');
 
         // Unsubscribe remote subscriptions
-        _.each(this._remoteSubscriptions, remoteSubscriptionId => {
-          ethereumNodeRemote.send('eth_unsubscribe', [remoteSubscriptionId]);
-        });
+        // _.each(this._remoteSubscriptions, remoteSubscriptionId => {
+        //   ethereumNodeRemote.send('eth_unsubscribe', [remoteSubscriptionId]);
+        // });
         this._remoteSubscriptions = {};
         this._subscriptionOwners = {};
 
@@ -579,11 +579,11 @@ class IpcProviderBackend {
     if (result.method === 'eth_unsubscribe') {
       const subscriptionId = result.params[0];
       const localSubscriptionId = this._remoteSubscriptions[subscriptionId];
-      if (localSubscriptionId) {
-        ethereumNodeRemote.send('eth_unsubscribe', [localSubscriptionId]);
-        delete this._remoteSubscriptions[subscriptionId];
-        delete this._subscriptionOwners[subscriptionId];
-      }
+      // if (localSubscriptionId) {
+      //   ethereumNodeRemote.send('eth_unsubscribe', [localSubscriptionId]);
+      //   delete this._remoteSubscriptions[subscriptionId];
+      //   delete this._subscriptionOwners[subscriptionId];
+      // }
     }
 
     return result;
@@ -603,12 +603,12 @@ class IpcProviderBackend {
       );
 
       var remoteSubscriptionId;
-      const requestId = await ethereumNodeRemote.send('eth_subscribe', params);
+      // const requestId = await ethereumNodeRemote.send('eth_subscribe', params);
 
-      if (!requestId) {
-        log.error('No return id for request');
-        return;
-      }
+      // if (!requestId) {
+      //   log.error('No return id for request');
+      //   return;
+      // }
 
       const callback = data => {
         if (!data) {
@@ -637,7 +637,7 @@ class IpcProviderBackend {
         }
       };
 
-      ethereumNodeRemote.ws.on('message', callback);
+      // ethereumNodeRemote.ws.on('message', callback);
     });
   }
 
