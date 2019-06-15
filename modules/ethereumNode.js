@@ -22,7 +22,7 @@ const ethereumNodeLog = logger.create('EthereumNode');
 import os from 'os';
 
 const DEFAULT_NODE_TYPE = 'XDC';
-const DEFAULT_NETWORK = 'apothem';
+const DEFAULT_NETWORK = 'main';
 const DEFAULT_SYNCMODE = 'full';
 
 const UNABLE_TO_BIND_PORT_ERROR = 'unableToBindPort';
