@@ -33,50 +33,50 @@ class NodeInfo extends Component {
     this.setState({ ticks: this.state.ticks + 1 });
   }
 
-  renderRemoteStats() {
-    // Hide remote stats if local node is synced
-    if (this.props.active !== 'remote') {
-      return null;
-    }
+  // renderRemoteStats() {
+  //   // Hide remote stats if local node is synced
+  //   if (this.props.active !== 'remote') {
+  //     return null;
+  //   }
 
-    const formattedBlockNumber = numeral(this.props.remote.blockNumber).format(
-      '0,0'
-    );
-    const remoteTimestamp = moment.unix(this.props.remote.timestamp);
-    const diff = moment().diff(remoteTimestamp, 'seconds');
+  //   const formattedBlockNumber = numeral(this.props.remote.blockNumber).format(
+  //     '0,0'
+  //   );
+  //   const remoteTimestamp = moment.unix(this.props.remote.timestamp);
+  //   const diff = moment().diff(remoteTimestamp, 'seconds');
 
-    if (this.props.remote.blockNumber < 1000) {
-      // Still loading initial remote results
-      return (
-        <div id="remote-stats" className="node-info__section">
-          <div className="node-info__node-title orange">
-            <strong>Remote</strong> Node
-          </div>
-          <div>
-            <div className="remote-loading row-icon">
-              <i className="icon icon-energy" />
-              {i18n.t('mist.nodeInfo.connecting')}
-            </div>
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div id="remote-stats" className="node-info__section">
-          <div className="node-info__node-title orange">
-            <strong>Remote</strong> Node
-            <span className="node-info__pill">
-              {i18n.t('mist.nodeInfo.active')}
-            </span>
-          </div>
-          <div className="block-number row-icon">
-            <i className="icon icon-layers" /> {formattedBlockNumber}
-          </div>
-          {this.renderTimeSince(diff)}
-        </div>
-      );
-    }
-  }
+  //   if (this.props.remote.blockNumber < 1000) {
+  //     // Still loading initial remote results
+  //     return (
+  //       <div id="remote-stats" className="node-info__section">
+  //         <div className="node-info__node-title orange">
+  //           <strong>Remote</strong> Node
+  //         </div>
+  //         <div>
+  //           <div className="remote-loading row-icon">
+  //             <i className="icon icon-energy" />
+  //             {i18n.t('mist.nodeInfo.connecting')}
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div id="remote-stats" className="node-info__section">
+  //         <div className="node-info__node-title orange">
+  //           <strong>Remote</strong> Node
+  //           <span className="node-info__pill">
+  //             {i18n.t('mist.nodeInfo.active')}
+  //           </span>
+  //         </div>
+  //         <div className="block-number row-icon">
+  //           <i className="icon icon-layers" /> {formattedBlockNumber}
+  //         </div>
+  //         {this.renderTimeSince(diff)}
+  //       </div>
+  //     );
+  //   }
+  // }
 
   localStatsFindingPeers() {
     return (
@@ -261,7 +261,7 @@ class NodeInfo extends Component {
                 </div>
               </div>
 
-              {this.renderRemoteStats()}
+              {/* {this.renderRemoteStats()} */}
 
               {this.renderLocalStats()}
             </section>
