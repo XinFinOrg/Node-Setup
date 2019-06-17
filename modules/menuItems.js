@@ -254,24 +254,24 @@ let menuTempl = function(webviews) {
   menu.push({
     label: i18n.t('mist.applicationMenu.file.label'),
     submenu: [
-      {
-        label: i18n.t('mist.applicationMenu.file.newAccount'),
-        accelerator: 'CommandOrControl+N',
-        click() {
-          Windows.createPopup('requestAccount');
-        }
-      },
-      {
-        label: i18n.t('mist.applicationMenu.file.importPresale'),
-        accelerator: 'CommandOrControl+I',
-        enabled: ethereumNode.isMainNetwork,
-        click() {
-          Windows.createPopup('importAccount');
-        }
-      },
-      {
-        type: 'separator'
-      },
+      // {
+      //   label: i18n.t('mist.applicationMenu.file.newAccount'),
+      //   accelerator: 'CommandOrControl+N',
+      //   click() {
+      //     Windows.createPopup('requestAccount');
+      //   }
+      // },
+      // {
+      //   label: i18n.t('mist.applicationMenu.file.importPresale'),
+      //   accelerator: 'CommandOrControl+I',
+      //   enabled: ethereumNode.isMainNetwork,
+      //   click() {
+      //     Windows.createPopup('importAccount');
+      //   }
+      // },
+      // {
+      //   type: 'separator'
+      // },
       {
         label: i18n.t('mist.applicationMenu.file.backup'),
         submenu: [
@@ -291,7 +291,7 @@ let menuTempl = function(webviews) {
                 // XDC
               } else {
                 if (process.platform === 'darwin') {
-                  userPath += '/Library/Ethereum/keystore';
+                  userPath += '/Library/XDCChain/keystore';
                 }
 
                 if (
@@ -299,11 +299,11 @@ let menuTempl = function(webviews) {
                   process.platform === 'linux' ||
                   process.platform === 'sunos'
                 ) {
-                  userPath += '/.ethereum/keystore';
+                  userPath += '/.XDC/keystore';
                 }
 
                 if (process.platform === 'win32') {
-                  userPath = `${Settings.appDataPath}\\Ethereum\\keystore`;
+                  userPath = `${Settings.appDataPath}\\XDCChain\\keystore`;
                 }
               }
 
@@ -323,44 +323,44 @@ let menuTempl = function(webviews) {
   });
 
   // EDIT
-  menu.push({
-    label: i18n.t('mist.applicationMenu.edit.label'),
-    submenu: [
-      {
-        label: i18n.t('mist.applicationMenu.edit.undo'),
-        accelerator: 'CommandOrControl+Z',
-        role: 'undo'
-      },
-      {
-        label: i18n.t('mist.applicationMenu.edit.redo'),
-        accelerator: 'Shift+CommandOrControl+Z',
-        role: 'redo'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: i18n.t('mist.applicationMenu.edit.cut'),
-        accelerator: 'CommandOrControl+X',
-        role: 'cut'
-      },
-      {
-        label: i18n.t('mist.applicationMenu.edit.copy'),
-        accelerator: 'CommandOrControl+C',
-        role: 'copy'
-      },
-      {
-        label: i18n.t('mist.applicationMenu.edit.paste'),
-        accelerator: 'CommandOrControl+V',
-        role: 'paste'
-      },
-      {
-        label: i18n.t('mist.applicationMenu.edit.selectAll'),
-        accelerator: 'CommandOrControl+A',
-        role: 'selectall'
-      }
-    ]
-  });
+  // menu.push({
+  //   label: i18n.t('mist.applicationMenu.edit.label'),
+  //   submenu: [
+  //     {
+  //       label: i18n.t('mist.applicationMenu.edit.undo'),
+  //       accelerator: 'CommandOrControl+Z',
+  //       role: 'undo'
+  //     },
+  //     {
+  //       label: i18n.t('mist.applicationMenu.edit.redo'),
+  //       accelerator: 'Shift+CommandOrControl+Z',
+  //       role: 'redo'
+  //     },
+  //     {
+  //       type: 'separator'
+  //     },
+  //     {
+  //       label: i18n.t('mist.applicationMenu.edit.cut'),
+  //       accelerator: 'CommandOrControl+X',
+  //       role: 'cut'
+  //     },
+  //     {
+  //       label: i18n.t('mist.applicationMenu.edit.copy'),
+  //       accelerator: 'CommandOrControl+C',
+  //       role: 'copy'
+  //     },
+  //     {
+  //       label: i18n.t('mist.applicationMenu.edit.paste'),
+  //       accelerator: 'CommandOrControl+V',
+  //       role: 'paste'
+  //     },
+  //     {
+  //       label: i18n.t('mist.applicationMenu.edit.selectAll'),
+  //       accelerator: 'CommandOrControl+A',
+  //       role: 'selectall'
+  //     }
+  //   ]
+  // });
 
   // LANGUAGE (VIEW)
   const switchLang = langCode => (menuItem, browserWindow) => {
@@ -394,13 +394,13 @@ let menuTempl = function(webviews) {
   menu.push({
     label: i18n.t('mist.applicationMenu.view.label'),
     submenu: [
-      {
-        label: i18n.t('mist.applicationMenu.view.txHistory'),
-        accelerator: 'CommandOrControl+Shift+H',
-        click() {
-          Windows.createPopup('txHistory');
-        }
-      },
+      // {
+      //   label: i18n.t('mist.applicationMenu.view.txHistory'),
+      //   accelerator: 'CommandOrControl+Shift+H',
+      //   click() {
+      //     Windows.createPopup('txHistory');
+      //   }
+      // },
       {
         label: i18n.t('mist.applicationMenu.view.fullscreen'),
         accelerator: switchForSystem({
@@ -582,26 +582,6 @@ let menuTempl = function(webviews) {
           changeNodeNetwork('apothem', webviews);
         }
       }
-      // {
-      //   label: 'Rinkeby - Test network',
-      //   accelerator: 'CommandOrControl+Alt+3',
-      //   checked: store.getState().nodes.network === 'rinkeby',
-      //   enabled: store.getState().nodes.network !== 'private',
-      //   type: 'checkbox',
-      //   click() {
-      //     changeNodeNetwork('rinkeby', webviews);
-      //   }
-      // }
-      // {
-      //   label: 'Solo network',
-      //   accelerator: 'CommandOrControl+Alt+4',
-      //   checked: ethereumNode.isOwnNode && ethereumNode.isDevNetwork,
-      //   enabled: ethereumNode.isOwnNode,
-      //   type: 'checkbox',
-      //   click() {
-      //     restartNode(ethereumNode.type, 'dev');
-      //   }
-      // }
     ]
   });
 
@@ -714,13 +694,6 @@ let menuTempl = function(webviews) {
         label: i18n.t('mist.applicationMenu.window.close'),
         accelerator: 'CommandOrControl+W',
         role: 'close'
-      },
-      {
-        type: 'separator'
-      },
-      {
-        label: i18n.t('mist.applicationMenu.window.toFront'),
-        role: 'front'
       }
     ]
   });

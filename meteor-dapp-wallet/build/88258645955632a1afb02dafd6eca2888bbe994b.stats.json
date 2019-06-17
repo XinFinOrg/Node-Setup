@@ -3,8 +3,8 @@
     "name": "standard-minifier-js",
     "version": "2.3.2"
   },
-  "totalMinifiedBytes": 2927074,
-  "totalMinifiedGzipBytes": 743700,
+  "totalMinifiedBytes": 2927042,
+  "totalMinifiedGzipBytes": 743688,
   "minifiedBytesByPackage": {
     "packages/meteor.js": 8962,
     "packages/standard-minifiers.js": 38,
@@ -1143,7 +1143,7 @@
     "app/i18n/app.zh.i18n.json": 124,
     "app/i18n/wallet.ca.i18n.json": 125,
     "app/i18n/wallet.de.i18n.json": 124,
-    "app/i18n/wallet.en.i18n.json": 14567,
+    "app/i18n/wallet.en.i18n.json": 14535,
     "app/i18n/wallet.es.i18n.json": 134,
     "app/i18n/wallet.fr.i18n.json": 135,
     "app/i18n/wallet.ja.i18n.json": 128,
