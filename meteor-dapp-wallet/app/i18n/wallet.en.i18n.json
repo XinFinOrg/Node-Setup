@@ -44,7 +44,7 @@
         "noAccounts": {
           "title": "Configuration will take few mins to connect XinFin Network",
           "text":
-            ""
+            "Be Careful! Please do not transfer real funds to this account."
         }
       },
       "error": {
@@ -131,7 +131,7 @@
           "description": "Make sure to write down the wallet contract address:"
         },
         "copyAddressWarning":
-          "<strong>Warning:</strong> Be careful not to transfer real funds to this account.",
+          "<strong>Warning:</strong> Be Careful! Please do not transfer real funds to this account.",
         "buttonOk": "Copy anyway",
         "buttonCancel": "Nevermind.."
       }
