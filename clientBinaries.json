@@ -46,7 +46,7 @@
         "mac": {
           "x64": {
             "download": {
-              "url": "http://download.xinfin.network/XDC-linux.tar.gz",
+              "url": "http://download.xinfin.network/XDC-mac.tar.gz",
               "type": "tar",
               "bin": "XDC-darwin/XDC"
             },
